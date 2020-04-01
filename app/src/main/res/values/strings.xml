@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CheckGuincho</string>
+    <string name="versao">Versão 1.6.1</string>
+
+    <string name="botao_atendimento">Atendimento</string>
+    <string name="botao_configuracoes">Configurações</string>
+</resources>
