@@ -1,7 +1,17 @@
 <resources>
     <string name="app_name">CheckGuincho</string>
-    <string name="versao">Versão 1.6.1</string>
+    <string name="versao">Versão: 1.6.1</string>
 
     <string name="botao_atendimento">Atendimento</string>
     <string name="botao_configuracoes">Configurações</string>
+    <string name="textoDadosEmpresa">Dados da Empresa</string>
+    <string name="textoEmpresa">Empresa: </string>
+    <string name="textocnpj">CNPJ: </string>
+    <string name="textoDadosPrestador">Dados do Prestador</string>
+    <string name="textoMotorista">"Motorista: "</string>
+    <string name="textoRg">"Rg: "</string>
+    <string name="textoTelefone">"Telefone: "</string>
+    <string name="textoDadosGerais">Dados Gerais</string>
+    <string name="textoCarregarLogo">"Carregar Logo: "</string>
+    <string name="textoAssinatura">Assinatura: </string>
 </resources>

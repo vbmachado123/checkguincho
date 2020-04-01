@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "191088687036",
+    "firebase_url": "https://checkguincho-6df5b.firebaseio.com",
+    "project_id": "checkguincho-6df5b",
+    "storage_bucket": "checkguincho-6df5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191088687036:android:bc259fff32544ecc301db9",
+        "android_client_info": {
+          "package_name": "com.balbino.checkguincho"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191088687036-9uhobcm2ksopa74ub25de0ul0vh41nj9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.balbino.checkguincho",
+            "certificate_hash": "d389e8f07e9d8a39457fd8ac83e293d9f4ce6fb0"
+          }
+        },
+        {
+          "client_id": "191088687036-5mckb2bktd1maljq09qi2apfee82g2a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA0GF_YBncUG128tI0TEwGZniYHyKTfK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191088687036-5mckb2bktd1maljq09qi2apfee82g2a7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
