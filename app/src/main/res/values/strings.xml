@@ -24,4 +24,11 @@
     <string name="texto_digiteTelefone">Digite o telefone</string>
     <string name="botao_cadastrar">Cadastrar</string>
     <string name="texto_Cadastrado">Já possuo conta</string>
+    <string name="texto_nomeEmpresa">Nome Empresa</string>
+    <string name="texto_data">Data</string>
+    <string name="texto_nomePrestador">Nome Prestador</string>
+    <string name="texto_localizacao">Localização</string>
+    <string name="botao_iniciaAtendimento">Iniciar Atendimento</string>
+    <string name="botao_salvar">Salvar</string>
+    <string name="botao_proximo">Próximo</string>
 </resources>

@@ -3,7 +3,9 @@ package model;
 public class FotosInspecao {
     private int id;
     private int idInspecao;
-    private String caminhoFoto;
+    private String caminhoFotoPainel;
+    private String caminhoFotoFrente;
+    private String caminhoFotoLado;
 
     public int getId() {
         return id;
@@ -21,11 +23,27 @@ public class FotosInspecao {
         this.idInspecao = idInspecao;
     }
 
-    public String getCaminhoFoto() {
-        return caminhoFoto;
+    public String getCaminhoFotoPainel() {
+        return caminhoFotoPainel;
     }
 
-    public void setCaminhoFoto(String caminhoFoto) {
-        this.caminhoFoto = caminhoFoto;
+    public void setCaminhoFotoPainel(String caminhoFotoPainel) {
+        this.caminhoFotoPainel = caminhoFotoPainel;
+    }
+
+    public String getCaminhoFotoFrente() {
+        return caminhoFotoFrente;
+    }
+
+    public void setCaminhoFotoFrente(String caminhoFotoFrente) {
+        this.caminhoFotoFrente = caminhoFotoFrente;
+    }
+
+    public String getCaminhoFotoLado() {
+        return caminhoFotoLado;
+    }
+
+    public void setCaminhoFotoLado(String caminhoFotoLado) {
+        this.caminhoFotoLado = caminhoFotoLado;
     }
 }

@@ -39,7 +39,6 @@ public class HomeActivity extends AppCompatActivity {
 
         Permissao permissao = new Permissao();
         permissao.Permissoes(this);
-
     }
 
     private void validaCampo() {
@@ -49,6 +48,14 @@ public class HomeActivity extends AppCompatActivity {
         imagemLogo = (ImageView) findViewById(R.id.ivLogo);
 
         Usuario usuario = new UsuarioDao(this).recupera();
+
+        atendimento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //acessaActivity(AtendimentoActivity.class);
+                acessaActivity(AssinaturaPrestadorActivity.class);
+            }
+        });
 
         configuracao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void acessaActivity(Class c) {
-        Intent it = new Intent(HomeActivity.this, ConfiguracaoActivity.class);
+        Intent it = new Intent(HomeActivity.this, c);
         startActivity(it);
     }
 }

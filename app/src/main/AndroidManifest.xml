@@ -2,15 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.balbino.checkguincho">
 
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <uses-feature android:name="android.hardware.camera2"
-        android:required="true"/>
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -19,12 +19,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="telas.CadastroActivity"></activity>
+        <activity android:name="telas.FormularioActivity"></activity>
+        <activity android:name="telas.AssinaturaEntregaActivity" />
+        <activity android:name="telas.AssinaturaRetiraActivity" />
+        <activity android:name="telas.AssinaturaRecusaActivity" />
+        <activity android:name="telas.AssinaturaPrestadorActivity" />
+        <activity android:name="telas.CadastroActivity" />
         <activity android:name="telas.LoginActivity" />
         <activity android:name="telas.AtendimentoActivity" />
         <activity android:name="telas.ConfiguracaoActivity" />
         <activity android:name="telas.MainActivity" />
-
         <activity android:name="telas.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
