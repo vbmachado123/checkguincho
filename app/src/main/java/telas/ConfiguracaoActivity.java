@@ -1,8 +1,11 @@
 package telas;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.balbino.checkguincho.R;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import dao.UsuarioDao;
@@ -24,6 +29,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     private FloatingActionButton fabSalvar;
 
     private Usuario usuario;
+    private UsuarioDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,21 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_configuracao);
 
         validaCampo();
+        mascaraCampo();
+    }
+
+    private void mascaraCampo() {
+        SimpleMaskFormatter smftel = new SimpleMaskFormatter("(NN) NNNNN-NNNN");
+        MaskTextWatcher mtwTel = new MaskTextWatcher(telefoneMotorista, smftel);
+        telefoneMotorista.addTextChangedListener(mtwTel);
+
+        SimpleMaskFormatter smfCnpj = new SimpleMaskFormatter("NN.NNN.NNN/NNNN-NN");
+        MaskTextWatcher mtwCnpj = new MaskTextWatcher(cnpjEmpresa, smfCnpj);
+        cnpjEmpresa.addTextChangedListener(mtwCnpj);
+
+        SimpleMaskFormatter smfRg = new SimpleMaskFormatter("NN.NNN.NNN");
+        MaskTextWatcher mtwRg = new MaskTextWatcher(rgMotorista, smfRg);
+        rgMotorista.addTextChangedListener(mtwRg);
     }
 
     private void validaCampo() {
@@ -47,7 +68,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         assinatura = (TextView) findViewById(R.id.tvAssinatura);
         fabSalvar = (FloatingActionButton) findViewById(R.id.fabSalvar);
 
-        final UsuarioDao dao = new UsuarioDao(this);
+        dao = new UsuarioDao(this);
         usuario = dao.recupera();
         nomeEmpresa.setText(usuario.getNomeEmpresa());
         cnpjEmpresa.setText(usuario.getCnpjEmpresa());
@@ -58,14 +79,42 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         fabSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                usuario.setNomeEmpresa(nomeEmpresa.getText().toString());
-                usuario.setCnpjEmpresa(cnpjEmpresa.getText().toString());
-                usuario.setNomeMorotista(nomeMotorista.getText().toString());
-
-
-                dao.atualizar(usuario);
+                confirmaSaida();
             }
         });
+    }
 
+    private void confirmaSaida() {
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Atenção")
+                .setMessage("Realmente deseja atualizar as informações?")
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        acessaActivity(HomeActivity.class);
+
+                    }
+                })
+                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        usuario.setNomeEmpresa(nomeEmpresa.getText().toString());
+                        usuario.setCnpjEmpresa(cnpjEmpresa.getText().toString());
+                        usuario.setNomeMorotista(nomeMotorista.getText().toString());
+                        usuario.setRgMotorista(rgMotorista.getText().toString());
+                        usuario.setTelefoneMotorista(telefoneMotorista.getText().toString());
+                        dao.atualizar(usuario);
+
+                        acessaActivity(HomeActivity.class);
+
+                    }
+                }).create();
+        dialog.show();
+    }
+    public void acessaActivity(Class c){
+        Intent it = new Intent(ConfiguracaoActivity.this, c);
+        startActivity(it);
     }
 }
