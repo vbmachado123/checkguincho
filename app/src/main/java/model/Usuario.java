@@ -1,29 +1,43 @@
 package model;
 
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
-public class Usuario {
+import java.io.Serializable;
+
+import util.Base64Custom;
+import util.ConfiguracaoFirebase;
+
+public class Usuario implements Serializable {
 
     private int id;
 
     /* LOGIN */
-    private String email;
-    private String senha;
+    private String email = null;
+    private String senha = null;
 
     /* EMPRESA */
-    private String nomeEmpresa;
-    private String cnpjEmpresa;
+    private String nomeEmpresa = null;
+    private String cnpjEmpresa = null;
 
     /* MOTORISTA */
-    private String nomeMorotista;
-    private String rgMotorista;
-    private String telefoneMotorista;
+    private String nomeMorotista = null;
+    private String rgMotorista = null;
+    private String telefoneMotorista = null;
 
     /* IMAGENS */
-    private String caminhoImagemLogo;
-    private String caminhoAssinatura;
+    private String caminhoImagemLogo = null;
+    private String caminhoAssinatura = null;
 
     public void Usuario(){}
+
+    public String salvar(){
+        String identificador = Base64Custom.codificarBase64(email);
+        DatabaseReference refenciaFirebase = ConfiguracaoFirebase.getFirebaseDatabase();
+        refenciaFirebase.child("usuarios").child(identificador).setValue(this);
+
+        return identificador;
+    }
 
     public int getId() {
         return id;

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context="telas.LoginActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:src="@drawable/logo"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/etEmail"
+                android:hint="@string/texto_digiteEmail"
+                android:inputType="textEmailAddress"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/etSenha"
+                android:hint="@string/texto_digiteSenha"
+                android:inputType="textPassword"/>
+
+            <Button
+                android:layout_marginTop="40dp"
+                android:id="@+id/btLogin"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_style"
+                android:text="@string/botao_Login"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tvCadastrar"
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/texto_cadastrar"/>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

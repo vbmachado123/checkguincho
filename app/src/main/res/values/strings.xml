@@ -14,4 +14,14 @@
     <string name="textoDadosGerais">Dados Gerais</string>
     <string name="textoCarregarLogo">"Carregar Logo: "</string>
     <string name="textoAssinatura">Assinatura: </string>
+    <string name="texto_digiteEmail">Digite seu e-mail</string>
+    <string name="texto_digiteSenha">Digite sua senha</string>
+    <string name="botao_Login">Login</string>
+    <string name="texto_cadastrar">Não possui conta? Cadastre-se</string>
+    <string name="texto_logo">Adicionar uma logo</string>
+    <string name="texto_alterarDepois">* Você pode alterar depois</string>
+    <string name="texto_digiteNome">Digite o nome da empresa</string>
+    <string name="texto_digiteTelefone">Digite o telefone</string>
+    <string name="botao_cadastrar">Cadastrar</string>
+    <string name="texto_Cadastrado">Já possuo conta</string>
 </resources>

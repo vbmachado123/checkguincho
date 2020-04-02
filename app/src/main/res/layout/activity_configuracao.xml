@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context="telas.ConfiguracaoActivity">
 
     <include android:id="@+id/toolbar"
@@ -171,9 +172,6 @@
                 android:id="@+id/tvVersao"
                 android:textAlignment="center"
                 android:text="@string/versao"/>
-
-
-
         </LinearLayout>
     </ScrollView>
 
@@ -194,5 +192,4 @@
                 app:srcCompat="@drawable/ic_save"
                 tools:ignore="VectorDrawableCompat" />
         </LinearLayout>
-
 </RelativeLayout>
