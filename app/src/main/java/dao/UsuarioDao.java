@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import model.Usuario;
 import sql.Conexao;
@@ -55,5 +56,23 @@ public class UsuarioDao {
         values.put("caminhoAssinatura", usuario.getCaminhoAssinatura());
 
         return banco.insert("usuario", null, values);
+    }
+
+    public void atualizar(Usuario usuario){
+        ContentValues values = new ContentValues();
+        values.put("email", usuario.getEmail());
+        values.put("senha", usuario.getSenha());
+        values.put("nomeEmpresa", usuario.getNomeEmpresa());
+        values.put("cnpjEmpresa", usuario.getCnpjEmpresa());
+        values.put("nomeMotorista", usuario.getNomeMorotista());
+        values.put("rgMotorista", usuario.getRgMotorista());
+        values.put("telefoneMotorista", usuario.getTelefoneMotorista());
+        values.put("caminhoLogo", usuario.getCaminhoImagemLogo());
+        values.put("caminhoAssinatura", usuario.getCaminhoAssinatura());
+
+        banco.update("usuario", values, "id = ?",
+                new String[]{String.valueOf(usuario.getId())});
+
+        Log.i("Log: ", "Id: " + String.valueOf(usuario.getId()));
     }
 }

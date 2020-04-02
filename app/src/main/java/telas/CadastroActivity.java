@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +35,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
+import dao.UsuarioDao;
 import model.Usuario;
 import util.ConfiguracaoFirebase;
 import util.Preferencias;
@@ -155,14 +157,25 @@ public class CadastroActivity extends AppCompatActivity {
                     }
                 }
             });
-         if( !(filePath == null) ) subirImagem();
+         if( !(filePath == null) ) {
+             usuario.setCaminhoImagemLogo(filePath.toString());
+             subirImagem();
+         }
+
+         salvaNoBancoLocal();
+    }
+
+    private void salvaNoBancoLocal() {
+        UsuarioDao dao = new UsuarioDao(this);
+        long id = dao.inserir(usuario);
+        Log.i("LOG: " , "cadastro: " + id);
     }
 
     private void subirImagem() {
 
         imgRef = reference
                 .child(usuario.getNomeEmpresa())
-                .child("logo");
+                .child("logo.png");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] dadosImagem = baos.toByteArray();
