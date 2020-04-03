@@ -108,17 +108,16 @@ public class AtendimentoActivity extends AppCompatActivity {
         LocalizacaoDao lDao = new LocalizacaoDao(this);
         TipoRegistroDao tDao = new TipoRegistroDao(this);
         tipoRegistro.setTipoRegistro("inicio do atendimento");
-        //long idTipo = tDao.inserir(tipoRegistro);
+        long idTipo = tDao.inserir(tipoRegistro);
 
         l.setData(data.getText().toString());
         l.setLatitude(String.valueOf(latitude));
         l.setLongitude(String.valueOf(longitude));
-      //  l.setIdTipoRegistro((int) idTipo);
+        l.setIdTipoRegistro((int) idTipo);
         l.setEndereco(localizacao.getText().toString());
-       // long idLoc = lDao.insere(l);
+        long idLoc = lDao.insere(l);
 
         Intent it = new Intent(AtendimentoActivity.this, FormularioActivity.class);
-      //  it.putExtra("idLocalizacao", idLoc);
         startActivity(it);
     }
 

@@ -29,8 +29,8 @@ public class Conexao extends SQLiteOpenHelper {
             "idInspecao INTEGER, caminhoFotoPainel TEXT, caminhoFotoFrente TEXT, caminhoFotoLado TEXT)";
 
     private String tabelaInspecao = "CREATE TABLE IF NOT EXISTS inspecao(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "idMarca INTEGER, idModelo INTEGER, idCor INTEGER, idUsuario INTEGER, nomeProprietario, ano INTEGER, " +
-            "placa TEXT, inspecao INTEGER, caminhoAssinaturaRecusa TEXT)";
+            "idMarca INTEGER, idModelo INTEGER, idCor INTEGER, idUsuario INTEGER, nomeProprietario TEXT, telefone TEXT , " +
+            "ano INTEGER, placa TEXT, inspecao INTEGER, caminhoAssinaturaRecusa TEXT)";
 
     private String tabelaLocalizacao = "CREATE TABLE IF NOT EXISTS localizacao(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "idTipoRegistro INTEGER, idInspecao INTEGER, data TEXT, latitude TEXT, longitude TEXT, endereco TEXT)";

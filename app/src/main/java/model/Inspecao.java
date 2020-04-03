@@ -9,6 +9,7 @@ public class Inspecao  implements Serializable {
     private int idCor;
     private int idUsuario;
     private String nomeProprietario;
+    private String telefone;
     private int ano;
     private String placa;
     private int inspecao;
@@ -92,5 +93,13 @@ public class Inspecao  implements Serializable {
 
     public void setCaminhoAssinaturaRecusa(String caminhoAssinaturaRecusa) {
         this.caminhoAssinaturaRecusa = caminhoAssinaturaRecusa;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 }

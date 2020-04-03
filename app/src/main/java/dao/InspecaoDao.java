@@ -35,10 +35,11 @@ public class InspecaoDao {
          inspecao.setIdCor(cursor.getInt(3));
          inspecao.setIdUsuario(cursor.getInt(4));
          inspecao.setNomeProprietario(cursor.getString(5));
-         inspecao.setAno(cursor.getInt(6));
-         inspecao.setPlaca(cursor.getString(7));
-         inspecao.setInspecao(cursor.getInt(8));
-         inspecao.setCaminhoAssinaturaRecusa(cursor.getString(9));
+         inspecao.setTelefone(cursor.getString(6));
+         inspecao.setAno(cursor.getInt(7));
+         inspecao.setPlaca(cursor.getString(8));
+         inspecao.setInspecao(cursor.getInt(9));
+         inspecao.setCaminhoAssinaturaRecusa(cursor.getString(10));
         }
         return inspecao;
     }
@@ -50,6 +51,7 @@ public class InspecaoDao {
         values.put("idCor", inspecao.getIdCor());
         values.put("idUsuario", inspecao.getIdUsuario());
         values.put("nomeProprietario", inspecao.getNomeProprietario());
+        values.put("telefone", inspecao.getTelefone());
         values.put("ano", inspecao.getAno());
         values.put("placa", inspecao.getPlaca());
         values.put("inspecao", inspecao.getInspecao());
@@ -61,7 +63,7 @@ public class InspecaoDao {
     public List<Inspecao> obterTodos(){
         List<Inspecao> inspecoes = new ArrayList<>();
         Cursor cursor = banco.query("inspecao", new String[]{"id", "idMarca", "idModelo", "idCor", "idUsuario",
-           "nomeProprietario", "ano", "placa", "inspecao", "caminhoAssinaturaRecusa"}, null, null, null, null, null);
+           "nomeProprietario", "telefone", "ano", "placa", "inspecao", "caminhoAssinaturaRecusa"}, null, null, null, null, null);
 
         cursor.moveToFirst();
 
