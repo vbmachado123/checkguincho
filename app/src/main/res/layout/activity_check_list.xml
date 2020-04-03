@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context="telas.CheckListActivity">
+
+    <include android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <ScrollView
+        android:padding="8dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:padding="8dp"
+                android:textSize="26sp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textooVeiculoPossui" />
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbRadio"
+                android:text="@string/texto_radio"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbEstepe"
+                android:text="@string/texto_estepe"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbMacaco"
+                android:text="@string/texto_macaco"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbChaveRodas"
+                android:text="@string/texto_chaveRodas"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbTriangulo"
+                android:text="@string/texto_triangulo"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbExtintor"
+                android:text="@string/texto_extintor"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbCalotas"
+                android:text="@string/texto_calotas"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbTapeteBorracha"
+                android:text="@string/texto_tapeteBorracha"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbTapeteCarpete"
+                android:text="@string/texto_tapeteCarpete"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbRodaLiga"
+                android:text="@string/texto_rodasLiga"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbFaroisAux"
+                android:text="@string/texto_faroisAux"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbBateria"
+                android:text="@string/texto_bateria"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbRetrovisorEletrico"
+                android:text="@string/texto_retrovisorEletrico"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbBagageiro"
+                android:text="@string/texto_bagageiro"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbRack"
+                android:text="@string/texto_rack"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbCarter"
+                android:text="@string/texto_carter"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbDocumentos"
+                android:text="@string/texto_documentos"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbChaves"
+                android:text="@string/texto_chaves"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:padding="8dp"
+                android:id="@+id/cbMoto"
+                android:text="@string/texto_moto"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:padding="8dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/btProximo"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_style"
+                android:text="@string/botao_proximo"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

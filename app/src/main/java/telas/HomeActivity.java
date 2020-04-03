@@ -52,8 +52,8 @@ public class HomeActivity extends AppCompatActivity {
         atendimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //acessaActivity(AtendimentoActivity.class);
-                acessaActivity(AssinaturaPrestadorActivity.class);
+                acessaActivity(AtendimentoActivity.class);
+                //acessaActivity(AssinaturaPrestadorActivity.class);
             }
         });
 
