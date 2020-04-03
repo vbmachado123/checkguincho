@@ -1,6 +1,8 @@
 package model;
 
-public class Cor {
+import java.io.Serializable;
+
+public class Cor implements Serializable {
     private int id;
     private String cor;
 

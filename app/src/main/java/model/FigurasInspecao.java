@@ -1,6 +1,8 @@
 package model;
 
-public class FigurasInspecao {
+import java.io.Serializable;
+
+public class FigurasInspecao  implements Serializable {
     private int id;
     private int idInspecao;
     private String caminhoFigura;

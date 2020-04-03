@@ -1,6 +1,8 @@
 package model;
 
-public class FotosInspecao {
+import java.io.Serializable;
+
+public class FotosInspecao  implements Serializable {
     private int id;
     private int idInspecao;
     private String caminhoFotoPainel;

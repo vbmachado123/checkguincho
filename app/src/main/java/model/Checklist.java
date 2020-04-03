@@ -1,26 +1,29 @@
 package model;
 
-public class Checklist {
+import java.io.Serializable;
+
+public class Checklist implements Serializable {
     private int id;
     private int idInspecao;
-    private String radio;
-    private String estepe;
-    private String macaco;
-    private String chaveRodas;
-    private String triangulo;
-    private String extintor;
-    private String calotas;
-    private String tapetesBorracha;
-    private String tapetesCarpete;
-    private String rodaLiga;
-    private String faroisAux;
-    private String bateria;
-    private String retrovisorEletrico;
-    private String bagageiro;
-    private String rack;
-    private String protetorCarter;
-    private String documentos;
-    private String chaves;
+    private String radio = "   ";
+    private String estepe = "   ";
+    private String macaco = "   ";
+    private String chaveRodas = "   ";
+    private String triangulo = "   ";
+    private String extintor = "   ";
+    private String calotas = "   ";
+    private String tapetesBorracha = "   ";
+    private String tapetesCarpete = "   ";
+    private String rodaLiga = "   ";
+    private String faroisAux = "   ";
+    private String bateria = "   ";
+    private String retrovisorEletrico = "   ";
+    private String bagageiro = "   ";
+    private String rack = "   ";
+    private String protetorCarter = "   ";
+    private String documentos = "   ";
+    private String chaves = "   ";
+    private String moto = "   ";
 
     public int getId() {
         return id;
@@ -180,5 +183,13 @@ public class Checklist {
 
     public void setChaves(String chaves) {
         this.chaves = chaves;
+    }
+
+    public String getMoto() {
+        return moto;
+    }
+
+    public void setMoto(String moto) {
+        this.moto = moto;
     }
 }

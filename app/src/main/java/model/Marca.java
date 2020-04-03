@@ -1,6 +1,8 @@
 package model;
 
-public class Marca {
+import java.io.Serializable;
+
+public class Marca  implements Serializable {
     private int id;
     private String marca;
 

@@ -1,6 +1,8 @@
 package model;
 
-public class Pdf {
+import java.io.Serializable;
+
+public class Pdf  implements Serializable {
     private int id;
     private int idInspecao;
     private String caminhoDocumento;
