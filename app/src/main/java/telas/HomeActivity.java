@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.balbino.checkguincho.R;
 
@@ -48,6 +49,10 @@ public class HomeActivity extends AppCompatActivity {
         imagemLogo = (ImageView) findViewById(R.id.ivLogo);
 
         Usuario usuario = new UsuarioDao(this).recupera();
+        if(usuario == null) {
+            Toast.makeText(this, "Complete o cadastro para prosseguir!", Toast.LENGTH_SHORT).show();
+            acessaActivity(ConfiguracaoActivity.class);
+        }
 
         atendimento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,17 +69,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        File file = new File(usuario.getCaminhoImagemLogo());
-            Uri filePath = Uri.fromFile(file);
-            Bitmap bitmap;
-
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap( getContentResolver(), filePath );
-                imagemLogo.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.i("Log: " , "Erro: " + e);
-            }
     }
 
     private void acessaActivity(Class c) {

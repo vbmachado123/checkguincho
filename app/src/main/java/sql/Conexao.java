@@ -30,7 +30,7 @@ public class Conexao extends SQLiteOpenHelper {
 
     private String tabelaInspecao = "CREATE TABLE IF NOT EXISTS inspecao(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "idMarca INTEGER, idModelo INTEGER, idCor INTEGER, idUsuario INTEGER, nomeProprietario TEXT, telefone TEXT , " +
-            "ano INTEGER, placa TEXT, inspecao INTEGER, caminhoAssinaturaRecusa TEXT)";
+            "ano VARCHAR(4), placa TEXT, inspecao INTEGER, caminhoAssinaturaRecusa TEXT)";
 
     private String tabelaLocalizacao = "CREATE TABLE IF NOT EXISTS localizacao(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "idTipoRegistro INTEGER, idInspecao INTEGER, data TEXT, latitude TEXT, longitude TEXT, endereco TEXT)";
@@ -53,7 +53,6 @@ public class Conexao extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         db.execSQL(tabelaUsuario);
         db.execSQL(tabelaCor);
         db.execSQL(tabelaMarca);
@@ -65,12 +64,10 @@ public class Conexao extends SQLiteOpenHelper {
         db.execSQL(tabelaTipoRegistro);
         db.execSQL(tabelaChecklist);
         db.execSQL(tabelaPdf);
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
         db.execSQL(tabelaUsuario);
         db.execSQL(tabelaCor);
         db.execSQL(tabelaMarca);

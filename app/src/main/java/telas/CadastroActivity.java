@@ -168,6 +168,7 @@ public class CadastroActivity extends AppCompatActivity {
     private void salvaNoBancoLocal() {
         UsuarioDao dao = new UsuarioDao(this);
         long id = dao.inserir(usuario);
+        acessaActivity(ConfiguracaoActivity.class);
         Log.i("LOG: " , "cadastro: " + id);
     }
 

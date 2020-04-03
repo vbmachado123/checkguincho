@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.balbino.checkguincho.R;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
@@ -43,12 +44,12 @@ public class FormularioActivity extends AppCompatActivity {
     private Inspecao inspecao;
 
     /* DAOs */
-    private CorDao corDao = new CorDao(this);
-    private InspecaoDao inspecaoDao = new InspecaoDao(this);
-    private MarcaDao marcaDao = new MarcaDao(this);
-    private ModeloDao modeloDao = new ModeloDao(this);
-    private LocalizacaoDao localizacaoDao = new LocalizacaoDao(this);
-    private UsuarioDao usuarioDao = new UsuarioDao(this);
+    private CorDao corDao;
+    private InspecaoDao inspecaoDao;
+    private MarcaDao marcaDao;
+    private ModeloDao modeloDao;
+    private LocalizacaoDao localizacaoDao;
+    private UsuarioDao usuarioDao;
 
     private Button proximo;
 
@@ -57,14 +58,21 @@ public class FormularioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
 
+        corDao = new CorDao(this);
+        inspecaoDao = new InspecaoDao(this);
+        marcaDao = new MarcaDao(this);
+        modeloDao = new ModeloDao(this);
+        localizacaoDao = new LocalizacaoDao(this);
+        usuarioDao = new UsuarioDao(this);
+
         validaCampo();
         mascaraCampo();
     }
 
     private void mascaraCampo() {
-        SimpleMaskFormatter smftel = new SimpleMaskFormatter("(NN) NNNNN-NNNN");
-        MaskTextWatcher mtwTel = new MaskTextWatcher(telefoneMotorista, smftel);
-        telefoneMotorista.addTextChangedListener(mtwTel);
+        SimpleMaskFormatter smfTelefone = new SimpleMaskFormatter("(NN) NNNNN-NNNN");
+        MaskTextWatcher mtwTelefone = new MaskTextWatcher(telefoneMotorista, smfTelefone);
+        telefoneMotorista.addTextChangedListener(mtwTelefone);
 
         SimpleMaskFormatter smfAno = new SimpleMaskFormatter("NNNN");
         MaskTextWatcher mtwAno = new MaskTextWatcher(ano, smfAno);
@@ -72,8 +80,15 @@ public class FormularioActivity extends AppCompatActivity {
     }
 
     private void validaCampo() {
-        nomeMotorista = (EditText) findViewById(R.id.etNomeMotorista);
-        telefoneMotorista = (EditText) findViewById(R.id.etTelefoneMorista);
+        mMarca = new Marca();
+        mModelo = new Modelo();
+        cCor = new Cor();
+        inspecao = new Inspecao();
+        usuario = new Usuario();
+        localizacao = new Localizacao();
+
+        nomeMotorista = (EditText) findViewById(R.id.etNomeProprietario);
+        telefoneMotorista = (EditText) findViewById(R.id.etTelefone);
         marca = (EditText) findViewById(R.id.etMarca);
         modelo = (EditText) findViewById(R.id.etModelo);
         ano = (EditText) findViewById(R.id.etAno);
@@ -85,19 +100,42 @@ public class FormularioActivity extends AppCompatActivity {
         proximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                salvaNoBanco();
+                boolean campo = validaCampoVazio();
+
+                if(campo) salvaNoBanco();
             }
         });
     }
 
-    private void salvaNoBanco() {
-            mMarca = new Marca();
-            mModelo = new Modelo();
-            cCor = new Cor();
-            inspecao = new Inspecao();
-            usuario = new Usuario();
-            localizacao = new Localizacao();
+    private boolean validaCampoVazio() {
+        boolean campo = true;
 
+        if(nomeMotorista.getText().length() == 0){
+            nomeMotorista.setError("Campo vazio!");
+            campo = false;
+        } else if(telefoneMotorista.getText().length() == 0){
+            telefoneMotorista.setError("Campo vazio!");
+            campo = false;
+        } else if(marca.getText().length() == 0){
+            marca.setError("Campo vazio!");
+            campo = false;
+        } else if(modelo.getText().length() == 0){
+            modelo.setError("Campo vazio!");
+            campo = false;
+        } else if(ano.getText().length() == 0){
+            ano.setError("Campo vazio!");
+            campo = false;
+        } else if(cor.getText().length() == 0){
+            cor.setError("Campo vazio!");
+            campo = false;
+        } else if(placa.getText().length() == 0){
+            placa.setError("Campo vazio!");
+            campo = false;
+        }
+        return campo;
+    }
+
+    private void salvaNoBanco() {
             usuario = usuarioDao.recupera();
 
             mMarca.setMarca(marca.getText().toString());
@@ -111,7 +149,7 @@ public class FormularioActivity extends AppCompatActivity {
 
             localizacao = localizacaoDao.recupera();
 
-            int anoConvertido = Integer.getInteger(ano.getText().toString());
+            int anoConvertido = Integer.parseInt(ano.getText().toString());
 
             inspecao.setNomeProprietario(nomeMotorista.getText().toString());
             inspecao.setTelefone(telefoneMotorista.getText().toString());

@@ -38,6 +38,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
         validaCampo();
         mascaraCampo();
+        dao = new UsuarioDao(this);
     }
 
     private void mascaraCampo() {
@@ -68,13 +69,15 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         assinatura = (TextView) findViewById(R.id.tvAssinatura);
         fabSalvar = (FloatingActionButton) findViewById(R.id.fabSalvar);
 
-        dao = new UsuarioDao(this);
         usuario = dao.recupera();
-        nomeEmpresa.setText(usuario.getNomeEmpresa());
-        cnpjEmpresa.setText(usuario.getCnpjEmpresa());
-        nomeMotorista.setText(usuario.getNomeMorotista());
-        rgMotorista.setText(usuario.getRgMotorista());
-        telefoneMotorista.setText(usuario.getTelefoneMotorista());
+
+        if(usuario != null){
+            nomeEmpresa.setText(usuario.getNomeEmpresa());
+            cnpjEmpresa.setText(usuario.getCnpjEmpresa());
+            nomeMotorista.setText(usuario.getNomeMorotista());
+            rgMotorista.setText(usuario.getRgMotorista());
+            telefoneMotorista.setText(usuario.getTelefoneMotorista());
+        }
 
         fabSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +85,15 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 confirmaSaida();
             }
         });
+    }
+
+    private void criarUsuario() {
+        usuario.setNomeEmpresa(nomeEmpresa.getText().toString());
+        usuario.setCnpjEmpresa(cnpjEmpresa.getText().toString());
+        usuario.setNomeMorotista(nomeMotorista.getText().toString());
+        usuario.setRgMotorista(rgMotorista.getText().toString());
+        usuario.setTelefoneMotorista(telefoneMotorista.getText().toString());
+        dao.inserir(usuario);
     }
 
     private void confirmaSaida() {
@@ -99,13 +111,16 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Usuario usuario1 = dao.recupera();
 
                         usuario.setNomeEmpresa(nomeEmpresa.getText().toString());
                         usuario.setCnpjEmpresa(cnpjEmpresa.getText().toString());
                         usuario.setNomeMorotista(nomeMotorista.getText().toString());
                         usuario.setRgMotorista(rgMotorista.getText().toString());
                         usuario.setTelefoneMotorista(telefoneMotorista.getText().toString());
-                        dao.atualizar(usuario);
+
+                        if(usuario1 != null) dao.atualizar(usuario);
+                        else dao.inserir(usuario);
 
                         acessaActivity(HomeActivity.class);
 

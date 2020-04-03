@@ -147,14 +147,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean validaCampoVazio() {
         boolean campo = true;
-        if(email.getText().length() <= 0){
+        if(email.getText().length() == 0){
             email.setError("Campo vazio!");
             campo = false;
-        } else if(senha.getText().length() <= 0) {
+        } else if(senha.getText().length() == 0) {
             senha.setError("Campo vazio!");
             campo = false;
         }
-        
         return campo;
     }
 

@@ -26,11 +26,11 @@
         <activity android:name="telas.AssinaturaRecusaActivity" />
         <activity android:name="telas.AssinaturaPrestadorActivity" />
         <activity android:name="telas.CadastroActivity" />
-        <activity android:name="telas.LoginActivity" />
+        <activity android:name="telas.HomeActivity" />
         <activity android:name="telas.AtendimentoActivity" />
         <activity android:name="telas.ConfiguracaoActivity" />
         <activity android:name="telas.MainActivity" />
-        <activity android:name="telas.HomeActivity">
+        <activity android:name="telas.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
