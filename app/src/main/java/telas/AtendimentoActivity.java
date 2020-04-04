@@ -84,7 +84,8 @@ public class AtendimentoActivity extends AppCompatActivity {
         Date dataAtual = calendar.getTime();
         data.setText(dataFormatada.format(dataAtual));
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -96,12 +97,12 @@ public class AtendimentoActivity extends AppCompatActivity {
             longitude = location.getLongitude();
             latitude = location.getLatitude();
         } else localizacao.setText("Localização indisponível...!");
-
-        try {
-            endereco = buscaEndereco(latitude, longitude);
+        try {  endereco = buscaEndereco(latitude, longitude);
             localizacao.setText(endereco.getAddressLine(0));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e){
+            localizacao.setText("Localização indisponível...!");
         }
     }
 
@@ -109,14 +110,14 @@ public class AtendimentoActivity extends AppCompatActivity {
         LocalizacaoDao lDao = new LocalizacaoDao(this);
         TipoRegistroDao tDao = new TipoRegistroDao(this);
         tipoRegistro.setTipoRegistro("inicio do atendimento");
-       // long idTipo = tDao.inserir(tipoRegistro);
+       long idTipo = tDao.inserir(tipoRegistro);
 
         l.setData(data.getText().toString());
         l.setLatitude(String.valueOf(latitude));
         l.setLongitude(String.valueOf(longitude));
-        //l.setIdTipoRegistro((int) idTipo);
+        l.setIdTipoRegistro((int) idTipo);
         l.setEndereco(localizacao.getText().toString());
-       // long idLoc = lDao.insere(l);
+        long idLoc = lDao.insere(l);
 
         Intent it = new Intent(AtendimentoActivity.this, FormularioActivity.class);
        // Log.i("LOG: ", "Localizacao: " + idLoc);

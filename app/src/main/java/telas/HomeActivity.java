@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 acessaActivity(AtendimentoActivity.class);
-                //acessaActivity(AssinaturaPrestadorActivity.class);
+                //acessaActivity(FiguraActivity.class);
             }
         });
 
