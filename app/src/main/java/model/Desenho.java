@@ -18,7 +18,7 @@ public class Desenho extends View {
     private Paint mBitmapPaint;
     private Paint mPaint;
 
-    public Desenho(Context c, int color) {
+    public Desenho(Context c, int color, int size) {
         super(c);
 
         mPath = new Path();
@@ -31,7 +31,7 @@ public class Desenho extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(3);
+        mPaint.setStrokeWidth(size); //3
     }
 
     @Override

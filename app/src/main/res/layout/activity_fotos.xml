@@ -10,4 +10,69 @@
     <include android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
 
+    <ScrollView
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:padding="8dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvPainel"
+                android:textAlignment="center"
+                android:textSize="22sp"
+                android:text="@string/texto_painel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:padding="8dp"
+                android:id="@+id/ivFtPainel"
+                android:layout_width="200dp"
+                android:layout_height="200dp"/>
+
+            <TextView
+                android:id="@+id/tvLateral"
+                android:textAlignment="center"
+                android:textSize="22sp"
+                android:text="@string/texto_lateral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:padding="8dp"
+                android:id="@+id/ivFtLateral"
+                android:layout_width="200dp"
+                android:layout_height="200dp"/>
+
+            <TextView
+                android:id="@+id/tvFrente"
+                android:textAlignment="center"
+                android:textSize="22sp"
+                android:text="@string/texto_frente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:padding="8dp"
+                android:id="@+id/ivFtFrente"
+                android:layout_width="200dp"
+                android:layout_height="200dp"/>
+
+            <Button
+                android:layout_marginTop="40dp"
+                android:id="@+id/btProximo"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_style"
+                android:text="@string/botao_proximo"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

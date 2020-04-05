@@ -61,4 +61,12 @@
     <string name="texto_documentos">Documentos</string>
     <string name="texto_chaves">Chaves</string>
     <string name="texto_moto">Motocicleta</string>
+    <string name="texto_observacao">Digite alguma observação...</string>
+    <string name="botao_gerarPdf">Gerar Pdf</string>
+    <string name="textoValor">"Valor: "</string>
+    <string name="textoObservacao">Observação: </string>
+    <string name="textoDadosResponsavel">Dados Responsável</string>
+    <string name="texto_painel">Foto Painel</string>
+    <string name="texto_lateral">Foto Lateral</string>
+    <string name="texto_frente">Foto Frente</string>
 </resources>

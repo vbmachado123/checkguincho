@@ -25,7 +25,7 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
         proximo = (Button) findViewById(R.id.btSalvarAssinatura);
 
         final RelativeLayout parent = (RelativeLayout) findViewById(R.id.rlAssinaPrestador);
-        desenho = new Desenho(this, 0xFF000000);
+        desenho = new Desenho(this, 0xFF000000, 3);
         parent.addView(desenho);
 
         proximo.setOnClickListener(new View.OnClickListener() {
