@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context="telas.DestinoActivity">
+
+    <include android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:layout_below="@+id/toolbar"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:padding="8dp"
+            android:id="@+id/tvData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/texto_data"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:padding="8dp"
+            android:id="@+id/tvLocalizacao"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/texto_localizacao"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/btChegadaDestino"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_style"
+            android:text="@string/botao_chegadaAoDestino"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</RelativeLayout>

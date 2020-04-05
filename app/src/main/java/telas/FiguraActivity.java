@@ -19,18 +19,29 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import dao.FigurasDao;
+import dao.InspecaoDao;
 import model.Desenho;
+import model.FigurasInspecao;
+import model.Inspecao;
 
 public class FiguraActivity extends AppCompatActivity {
 
     private Button proximo;
     private Desenho desenho;
     private String nome;
+    private Inspecao inspecao;
+    private FigurasInspecao figuras;
+    private FigurasDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_figura);
+
+        inspecao = new InspecaoDao(this).recupera();
+        figuras = new FigurasInspecao();
+        dao = new FigurasDao(this);
 
         proximo = (Button) findViewById(R.id.btSalvarDesenho);
 
@@ -62,6 +73,10 @@ public class FiguraActivity extends AppCompatActivity {
                 } catch (Exception e){
                     e.printStackTrace();
                 }
+
+                figuras.setIdInspecao(inspecao.getId());
+                figuras.setCaminhoFigura(nome);
+                dao.inserir(figuras);
 
                 Intent it = new Intent(FiguraActivity.this, FotosActivity.class);
                 startActivity(it);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.balbino.checkguincho">
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -20,15 +21,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="telas.FinalizaActivity"></activity>
-        <activity android:name="telas.FotosActivity" />
+        <activity android:name="telas.DestinoActivity"></activity>
+        <activity android:name="telas.FinalizaActivity" />
+        <activity
+            android:name="telas.FotosActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name="telas.FiguraActivity" />
         <activity android:name="telas.CheckListActivity" />
         <activity android:name="telas.FormularioActivity" />
-        <activity android:name="telas.AssinaturaEntregaActivity" />
-        <activity android:name="telas.AssinaturaRetiraActivity" />
-        <activity android:name="telas.AssinaturaRecusaActivity" />
-        <activity android:name="telas.AssinaturaPrestadorActivity" />
+        <activity
+            android:name="telas.AssinaturaEntregaActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="telas.AssinaturaRetiraActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="telas.AssinaturaRecusaActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="telas.AssinaturaPrestadorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name="telas.CadastroActivity" />
         <activity android:name="telas.HomeActivity" />
         <activity android:name="telas.AtendimentoActivity" />

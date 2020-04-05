@@ -164,7 +164,13 @@ public class FormularioActivity extends AppCompatActivity {
         else intInspecao = 0;
 
         inspecao.setInspecao(intInspecao);
-        inspecaoDao.insere(inspecao);
+        long idInspecao = inspecaoDao.insere(inspecao);
+
+        /* SALVANDO LOCALIZAÇÃO */
+        localizacao = localizacaoDao.recupera();
+        localizacao.setIdInspecao((int) idInspecao);
+        localizacaoDao.atualizar(localizacao);
+
         if(intInspecao == 1) acessaActivity(AssinaturaRecusaActivity.class);
         else if(intInspecao == 0) acessaActivity(CheckListActivity.class);
     }

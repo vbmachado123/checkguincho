@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.balbino.checkguincho.R;
@@ -25,18 +26,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import dao.InspecaoDao;
 import dao.LocalizacaoDao;
 import dao.TipoRegistroDao;
-import dao.UsuarioDao;
+import model.Inspecao;
 import model.Localizacao;
 import model.TipoRegistro;
-import model.Usuario;
 
-public class AtendimentoActivity extends AppCompatActivity {
+public class DestinoActivity extends AppCompatActivity {
 
-    private TextView nomeEmpresa, data, nomePrestador, localizacao;
-    private Button iniciaAtendimento;
-    private Usuario usuario;
+    private ImageView ivLogo;
+    private TextView tvdata, tvLocalizacao;
+    private Button chegadaDestino;
+
     private Localizacao l;
     private TipoRegistro tipoRegistro;
 
@@ -50,28 +52,16 @@ public class AtendimentoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_atendimento);
+        setContentView(R.layout.activity_destino);
+
         validaCampo();
     }
 
     private void validaCampo() {
-        nomeEmpresa = (TextView) findViewById(R.id.tvNomeEmpresa);
-        data = (TextView) findViewById(R.id.tvData);
-        nomePrestador = (TextView) findViewById(R.id.tvNomePrestador);
-        localizacao = (TextView) findViewById(R.id.tvLocalizacao);
-        iniciaAtendimento = (Button) findViewById(R.id.btIniciaAtendimento);
-
-        iniciaAtendimento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                salvaInformacoes();
-            }
-        });
-
-        /* DADOS DO USUARIO */
-        usuario = new UsuarioDao(this).recupera();
-        nomeEmpresa.setText(usuario.getNomeEmpresa());
-        nomePrestador.setText(usuario.getNomeMorotista());
+        ivLogo = (ImageView) findViewById(R.id.ivLogo);
+        tvdata = (TextView) findViewById(R.id.tvData);
+        tvLocalizacao = (TextView) findViewById(R.id.tvLocalizacao);
+        chegadaDestino = (Button) findViewById(R.id.btChegadaDestino);
 
         l = new Localizacao();
         tipoRegistro = new TipoRegistro();
@@ -82,9 +72,9 @@ public class AtendimentoActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         Date dataAtual = calendar.getTime();
-        data.setText(dataFormatada.format(dataAtual));
+        tvdata.setText(dataFormatada.format(dataAtual));
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -95,31 +85,41 @@ public class AtendimentoActivity extends AppCompatActivity {
         if(location != null) {
             longitude = location.getLongitude();
             latitude = location.getLatitude();
-        } else localizacao.setText("Localização indisponível...!");
+        } else tvLocalizacao.setText("Localização indisponível...!");
         try {  endereco = buscaEndereco(latitude, longitude);
-            localizacao.setText(endereco.getAddressLine(0));
+            tvLocalizacao.setText(endereco.getAddressLine(0));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e){
-            localizacao.setText("Localização indisponível...!");
+            tvLocalizacao.setText("Localização indisponível...!");
         }
+
+        chegadaDestino.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                salvaInformacoes();
+            }
+        });
     }
 
     private void salvaInformacoes() {
         LocalizacaoDao lDao = new LocalizacaoDao(this);
         TipoRegistroDao tDao = new TipoRegistroDao(this);
-        tipoRegistro.setTipoRegistro("inicio do atendimento");
-       long idTipo = tDao.inserir(tipoRegistro);
+        tipoRegistro.setTipoRegistro("Chegada ao destino");
+        long idTipo = tDao.inserir(tipoRegistro);
 
-        l.setData(data.getText().toString());
+        Inspecao inspecao = new InspecaoDao(DestinoActivity.this).recupera();
+
+        l.setData(tvdata.getText().toString());
         l.setLatitude(String.valueOf(latitude));
         l.setLongitude(String.valueOf(longitude));
         l.setIdTipoRegistro((int) idTipo);
-        l.setEndereco(localizacao.getText().toString());
+        l.setEndereco(tvLocalizacao.getText().toString());
+        l.setIdInspecao(inspecao.getId());
         long idLoc = lDao.insere(l);
 
-        Intent it = new Intent(AtendimentoActivity.this, FormularioActivity.class);
-       // Log.i("LOG: ", "Localizacao: " + idLoc);
+        Intent it = new Intent(DestinoActivity.this, AssinaturaEntregaActivity.class);
+        // Log.i("LOG: ", "Localizacao: " + idLoc);
         Log.i("LOG: ", "Localizacao: " + l.getData());
         Log.i("LOG: ", "Localizacao: " + l.getLatitude());
         Log.i("LOG: ", "Localizacao: " + l.getLongitude());
@@ -136,6 +136,6 @@ public class AtendimentoActivity extends AppCompatActivity {
         if(addresses.size() > 0){
             address = addresses.get(0);
         }
-            return address;
+        return address;
     }
 }

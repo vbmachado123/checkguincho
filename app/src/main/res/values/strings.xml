@@ -69,4 +69,5 @@
     <string name="texto_painel">Foto Painel</string>
     <string name="texto_lateral">Foto Lateral</string>
     <string name="texto_frente">Foto Frente</string>
+    <string name="botao_chegadaAoDestino">Chegada ao Destino</string>
 </resources>

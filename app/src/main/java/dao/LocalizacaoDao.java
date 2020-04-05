@@ -50,4 +50,18 @@ public class LocalizacaoDao {
 
      return banco.insert("localizacao", null, values);
     }
+
+    public void atualizar(Localizacao localizacao){
+        ContentValues values = new ContentValues();
+
+        values.put("idTipoRegistro", localizacao.getIdTipoRegistro());
+        values.put("idInspecao", localizacao.getIdInspecao());
+        values.put("data", localizacao.getData());
+        values.put("latitude", localizacao.getLatitude());
+        values.put("longitude", localizacao.getLongitude());
+        values.put("endereco", localizacao.getEndereco());
+
+        banco.update("localizacao", values, "id = ?",
+                new String[]{String.valueOf(localizacao.getId())});
+    }
 }
