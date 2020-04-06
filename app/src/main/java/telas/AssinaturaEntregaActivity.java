@@ -1,12 +1,15 @@
 package telas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -33,11 +36,16 @@ public class AssinaturaEntregaActivity extends AppCompatActivity implements Dial
     private FigurasDao dao;
 
     private String nomeDialog, rgDialog, caminho;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assinatura_entrega);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Assinatura Entrega");
+        setSupportActionBar(toolbar);
 
         abrirDialog();
 
@@ -96,5 +104,12 @@ public class AssinaturaEntregaActivity extends AppCompatActivity implements Dial
         /* PARA SALVAR OS DADOS NO NOME DA IMAGEM */
         nomeDialog = nome;
         rgDialog = rg;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_limpar, menu);
+        return true;
     }
 }

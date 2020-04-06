@@ -1,9 +1,12 @@
 package telas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -26,11 +29,16 @@ public class CheckListActivity extends AppCompatActivity {
     private Checklist checklist;
     private ChecklistDao cDao;
     private Inspecao inspecao;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_list);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("CheckList Inspeção");
+        setSupportActionBar(toolbar);
 
         validaCampo();
     }
@@ -91,5 +99,12 @@ public class CheckListActivity extends AppCompatActivity {
         dao.inserir(checklist);
         Intent it = new Intent(CheckListActivity.this, FiguraActivity.class);
         startActivity(it);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_limpar, menu);
+        return true;
     }
 }

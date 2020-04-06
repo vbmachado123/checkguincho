@@ -1,6 +1,7 @@
 package telas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -13,6 +14,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -48,6 +51,7 @@ public class DestinoActivity extends AppCompatActivity {
     private Address endereco;
     private double latitude = 0.0;
     private double longitude = 0.0;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,10 @@ public class DestinoActivity extends AppCompatActivity {
 
         l = new Localizacao();
         tipoRegistro = new TipoRegistro();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Chegada ao Destino");
+        setSupportActionBar(toolbar);
 
         /* RECUPERANDO A DATA */
         SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
@@ -137,5 +145,12 @@ public class DestinoActivity extends AppCompatActivity {
             address = addresses.get(0);
         }
         return address;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_home, menu);
+        return true;
     }
 }

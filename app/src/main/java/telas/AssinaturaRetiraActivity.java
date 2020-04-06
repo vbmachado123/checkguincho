@@ -1,6 +1,7 @@
 package telas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -15,6 +16,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -63,6 +66,7 @@ public class AssinaturaRetiraActivity extends AppCompatActivity implements Dialo
     private double longitude = 0.0;
 
     private String localizacao, dataFinal;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,10 @@ public class AssinaturaRetiraActivity extends AppCompatActivity implements Dialo
         abrirDialog();
 
         proximo = (Button) findViewById(R.id.btSalvarAssinatura);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Assinatura Retira");
+        setSupportActionBar(toolbar);
 
         final RelativeLayout parent = (RelativeLayout) findViewById(R.id.rlAssinaRetira);
         desenho = new Desenho(this, 0xFF000000, 3);
@@ -192,5 +200,12 @@ public class AssinaturaRetiraActivity extends AppCompatActivity implements Dialo
             address = addresses.get(0);
         }
         return address;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_limpar, menu);
+        return true;
     }
 }

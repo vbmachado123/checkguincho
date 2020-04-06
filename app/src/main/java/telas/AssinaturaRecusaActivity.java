@@ -2,6 +2,7 @@ package telas;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -28,6 +31,7 @@ public class AssinaturaRecusaActivity extends AppCompatActivity {
     private Button proximo;
     private Desenho desenho;
     private String nome;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,10 @@ public class AssinaturaRecusaActivity extends AppCompatActivity {
         proximo = (Button) findViewById(R.id.btSalvarAssinatura);
 
         exibeDialog();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Assinatura Recusa");
+        setSupportActionBar(toolbar);
 
         final RelativeLayout parent = (RelativeLayout) findViewById(R.id.rlAssinaRecusa);
         desenho = new Desenho(this, 0xFF000000, 3);
@@ -92,5 +100,12 @@ public class AssinaturaRecusaActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .create();
         dialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_limpar, menu);
+        return true;
     }
 }

@@ -1,9 +1,12 @@
 package telas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -53,6 +56,8 @@ public class FormularioActivity extends AppCompatActivity {
 
     private Button proximo;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +100,10 @@ public class FormularioActivity extends AppCompatActivity {
         cor = (EditText) findViewById(R.id.etCor);
         placa = (EditText) findViewById(R.id.etPlaca);
         recusaInspecao = (CheckBox) findViewById(R.id.cbRecusaInspecao);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Formulário de Inspeção");
+        setSupportActionBar(toolbar);
 
         proximo = (Button) findViewById(R.id.btProximo);
         proximo.setOnClickListener(new View.OnClickListener() {
@@ -178,5 +187,12 @@ public class FormularioActivity extends AppCompatActivity {
     public void acessaActivity(Class c){
         Intent it = new Intent(FormularioActivity.this, c);
         startActivity(it);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_limpar, menu);
+        return true;
     }
 }

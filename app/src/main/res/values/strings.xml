@@ -70,4 +70,6 @@
     <string name="texto_lateral">Foto Lateral</string>
     <string name="texto_frente">Foto Frente</string>
     <string name="botao_chegadaAoDestino">Chegada ao Destino</string>
+    <string name="texto_configuracoes">Configurações</string>
+    <string name="texto_sair">Sair</string>
 </resources>

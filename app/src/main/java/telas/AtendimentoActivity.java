@@ -1,6 +1,7 @@
 package telas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -13,6 +14,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -39,6 +42,7 @@ public class AtendimentoActivity extends AppCompatActivity {
     private Usuario usuario;
     private Localizacao l;
     private TipoRegistro tipoRegistro;
+    private Toolbar toolbar;
 
     /* LOCALIZAÇÃO */
     private Location location;
@@ -67,6 +71,10 @@ public class AtendimentoActivity extends AppCompatActivity {
                 salvaInformacoes();
             }
         });
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Atendimento");
+        setSupportActionBar(toolbar);
 
         /* DADOS DO USUARIO */
         usuario = new UsuarioDao(this).recupera();
@@ -137,5 +145,12 @@ public class AtendimentoActivity extends AppCompatActivity {
             address = addresses.get(0);
         }
             return address;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_configuracoes, menu);
+        return true;
     }
 }

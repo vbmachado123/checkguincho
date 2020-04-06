@@ -1,0 +1,23 @@
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".ConfirmaActivity">
+
+    <item android:id="@+id/itemConfiguracoes" android:title="@string/texto_configuracoes"
+        android:orderInCategory="100" app:showAsAction="never"/>
+
+    <item android:id="@+id/itemSair"
+        android:title="@string/texto_sair"
+        android:orderInCategory="200" app:showAsAction="never"/>
+
+    <item android:id="@+id/item_lista" android:title="Lista"
+        android:orderInCategory="300" app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_camera"
+        />
+
+    <item android:id="@+id/item_sincroniza" android:title="Sincronizar"
+        android:orderInCategory="400" app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_sync"
+        />
+
+</menu>

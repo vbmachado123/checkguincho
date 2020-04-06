@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:16.0.4'
     implementation 'com.google.firebase:firebase-storage:16.0.4'
     implementation 'com.karumi:dexter:6.0.2' /* PARA AS PERMISSÕES */
+    implementation 'com.itextpdf:itextg:5.5.10'
     implementation 'commons-io:commons-io:2.4'
     implementation 'com.github.rtoshiro.mflibrary:mflibrary:1.0.0'
     testImplementation 'junit:junit:4.12'

@@ -2,6 +2,7 @@ package telas;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button atendimento, configuracao;
     private ImageView imagemLogo;
     private String nome;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +54,17 @@ public class HomeActivity extends AppCompatActivity {
         configuracao = (Button) findViewById(R.id.btConfiguracoes);
         imagemLogo = (ImageView) findViewById(R.id.ivLogo);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         Usuario usuario = new UsuarioDao(this).recupera();
         if(usuario == null) {
+            toolbar.setTitle(usuario.getNomeEmpresa());
+            setSupportActionBar(toolbar);
             Toast.makeText(this, "Complete o cadastro para prosseguir!", Toast.LENGTH_SHORT).show();
             acessaActivity(ConfiguracaoActivity.class);
+        } else {
+            toolbar.setTitle(usuario.getNomeEmpresa());
+            setSupportActionBar(toolbar);
         }
 
         atendimento.setOnClickListener(new View.OnClickListener() {
@@ -89,5 +100,12 @@ public class HomeActivity extends AppCompatActivity {
     private void acessaActivity(Class c) {
         Intent it = new Intent(HomeActivity.this, c);
         startActivity(it);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_configuracoes, menu);
+        return true;
     }
 }

@@ -1,12 +1,15 @@
 package telas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -33,6 +36,7 @@ public class FiguraActivity extends AppCompatActivity {
     private Inspecao inspecao;
     private FigurasInspecao figuras;
     private FigurasDao dao;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,10 @@ public class FiguraActivity extends AppCompatActivity {
         inspecao = new InspecaoDao(this).recupera();
         figuras = new FigurasInspecao();
         dao = new FigurasDao(this);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Figuras Veículo");
+        setSupportActionBar(toolbar);
 
         proximo = (Button) findViewById(R.id.btSalvarDesenho);
 
@@ -82,5 +90,12 @@ public class FiguraActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_limpar, menu);
+        return true;
     }
 }

@@ -1,11 +1,14 @@
 package telas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -26,6 +29,7 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
     private Desenho desenho;
 
     private String nome;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,10 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_assinatura_prestador);
 
         proximo = (Button) findViewById(R.id.btSalvarAssinatura);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Assinatura Prestador");
+        setSupportActionBar(toolbar);
 
         final RelativeLayout parent = (RelativeLayout) findViewById(R.id.rlAssinaPrestador);
         desenho = new Desenho(this, 0xFF000000, 3);
@@ -67,5 +75,12 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_limpar, menu);
+        return true;
     }
 }
