@@ -35,10 +35,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracao);
-
         validaCampo();
         mascaraCampo();
-        dao = new UsuarioDao(this);
     }
 
     private void mascaraCampo() {
@@ -57,6 +55,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
     private void validaCampo() {
         usuario = new Usuario();
+        dao = new UsuarioDao(this);
 
         nomeEmpresa = (EditText) findViewById(R.id.etNomeEmpresa);
         cnpjEmpresa = (EditText) findViewById(R.id.etCnpjEmpresa);
@@ -122,8 +121,9 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                         if(usuario1 != null) dao.atualizar(usuario);
                         else dao.inserir(usuario);
 
-                        acessaActivity(HomeActivity.class);
+                        usuario.salvar();
 
+                        acessaActivity(HomeActivity.class);
                     }
                 }).create();
         dialog.show();

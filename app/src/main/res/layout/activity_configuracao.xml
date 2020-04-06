@@ -185,6 +185,7 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabSalvar"
+                app:fabSize="auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"

@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="telas.DestinoActivity"></activity>
+        <activity android:name="telas.ListaInspecaoActivity"></activity>
+        <activity android:name="telas.DestinoActivity" />
         <activity android:name="telas.FinalizaActivity" />
         <activity
             android:name="telas.FotosActivity"

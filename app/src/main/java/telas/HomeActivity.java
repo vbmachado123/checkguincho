@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private Button atendimento, configuracao;
     private ImageView imagemLogo;
+    private String nome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +59,30 @@ public class HomeActivity extends AppCompatActivity {
         atendimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                acessaActivity(AtendimentoActivity.class);
-               //acessaActivity(AssinaturaEntregaActivity.class);
+                assinaturaPrestador(AtendimentoActivity.class);
             }
         });
 
         configuracao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                acessaActivity(ConfiguracaoActivity.class);
+               assinaturaPrestador(ConfiguracaoActivity.class);
             }
         });
+    }
+
+    public void assinaturaPrestador(Class c){
+        boolean existe = true;
+        File mydir = new File(Environment.getExternalStorageDirectory() + "/CheckGuincho");
+        nome = mydir + "/Imagens/" + "AssinaturaPrestador" + ".jpg";
+        File file = new File(nome);
+        if( !(file.exists()) ) {
+            existe = false;
+            Toast.makeText(this, "Assine como prestador para prosseguir", Toast.LENGTH_SHORT).show();
+            acessaActivity(AssinaturaPrestadorActivity.class);
+        } else existe = true;
+
+        if(existe) acessaActivity(c);
 
     }
 

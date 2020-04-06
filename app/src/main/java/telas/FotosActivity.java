@@ -41,7 +41,6 @@ public class FotosActivity extends AppCompatActivity {
         ivLateral.setImageResource(R.drawable.lado);
         ivFrente.setImageResource(R.drawable.frente);
 
-
         proximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
