@@ -8,7 +8,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.MenuInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +24,8 @@ import com.balbino.checkguincho.R;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.File;
 
 import dao.UsuarioDao;
 import model.Usuario;
@@ -35,6 +40,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
     private Usuario usuario;
     private UsuarioDao dao;
+    private String caminhoAssinatura;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -87,6 +93,9 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             rgMotorista.setText(usuario.getRgMotorista());
             telefoneMotorista.setText(usuario.getTelefoneMotorista());
         }
+        
+        /* TEMPORÁRIO */
+        imagemLogo.setImageResource(R.drawable.logo);
 
         fabSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +103,13 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 confirmaSaida();
             }
         });
+        File mydir = new File(Environment.getExternalStorageDirectory() + "/CheckGuincho");
+        caminhoAssinatura = mydir + "/Imagens/" + "AssinaturaPrestador" + ".jpg";
+        File fileAssinatura = new File(caminhoAssinatura);
+        if( fileAssinatura.exists() ){
+            Bitmap assinatura = BitmapFactory.decodeFile(String.valueOf(fileAssinatura));
+            imagemAssinatura.setImageBitmap(assinatura);
+        }
     }
 
     private void criarUsuario() {

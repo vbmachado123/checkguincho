@@ -11,6 +11,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature
+        android:name="android.hardware.Camera"
+        android:required="true" />
+    <uses-feature
         android:name="android.hardware.camera2"
         android:required="true" />
 
@@ -18,10 +21,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="telas.ListaInspecaoActivity"></activity>
+        <activity android:name="telas.LoginActivity"></activity>
+        <activity android:name="telas.ListaInspecaoActivity" />
         <activity android:name="telas.DestinoActivity" />
         <activity android:name="telas.FinalizaActivity" />
         <activity
@@ -57,13 +61,23 @@
         <activity android:name="telas.AtendimentoActivity" />
         <activity android:name="telas.ConfiguracaoActivity" />
         <activity android:name="telas.MainActivity" />
-        <activity android:name="telas.LoginActivity">
+        <activity android:name="telas.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.balbino.checkguincho.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
     </application>
 
 </manifest>
