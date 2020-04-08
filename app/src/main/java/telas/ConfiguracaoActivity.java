@@ -24,11 +24,16 @@ import com.balbino.checkguincho.R;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 
 import dao.UsuarioDao;
 import model.Usuario;
+import util.Base64Custom;
+import util.ConfiguracaoFirebase;
 
 public class ConfiguracaoActivity extends AppCompatActivity {
 
@@ -42,6 +47,9 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     private UsuarioDao dao;
     private String caminhoAssinatura;
 
+    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+    private FirebaseAuth autenticacao;
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
         validaCampo();
         mascaraCampo();
+
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     }
 
     private void mascaraCampo() {
@@ -147,7 +157,9 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                         if(usuario1 != null) dao.atualizar(usuario);
                         else dao.inserir(usuario);
 
-                        usuario.salvar();
+                        String identificador = Base64Custom.codificarBase64(usuario.getEmail());
+
+                        reference.child("usuarios").child(identificador).setValue(usuario);
 
                         acessaActivity(HomeActivity.class);
                     }

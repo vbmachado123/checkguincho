@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.balbino.checkguincho.R;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class FotosActivity extends AppCompatActivity {
@@ -130,7 +131,7 @@ public class FotosActivity extends AppCompatActivity {
              file = null;
 
             try{
-                file = getImageFile(parteVeiculo, path);
+                file = getImageFile(parteVeiculo);
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -173,11 +174,10 @@ public class FotosActivity extends AppCompatActivity {
         }
     }
 
-    private File getImageFile(String parteVeiculo, String path) throws IOException{
-        File mydir = new File(Environment.getExternalStorageDirectory() + "/CheckGuincho");
-        if(mydir.exists()) mydir.mkdir();
-        path = mydir + "/Imagens/" + parteVeiculo + System.currentTimeMillis()  +".jpg";
-        File file = new File(path);
+    private File getImageFile(String parteVeiculo) throws IOException{
+        file = new File(Environment.getExternalStorageDirectory() + "/CheckGuincho" + "/Imagens/" + parteVeiculo + System.currentTimeMillis()  +".jpg");
+        if(file.exists()) file.mkdir();
+       /* FileOutputStream stream = new FileOutputStream(file);*/
         return file;
     }
 }

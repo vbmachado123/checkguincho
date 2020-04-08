@@ -53,12 +53,19 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                 Bitmap b = parent.getDrawingCache();
 
                 FileOutputStream out = null;
-                File mydir = new File(Environment.getExternalStorageDirectory() + "/CheckGuincho");
-                if(mydir.exists()) mydir.mkdir();
+                String nomePasta = "/CheckGuincho/Imagens";
+                String root = Environment.getExternalStorageDirectory().getAbsolutePath();
+                nome = "AssinaturaPrestador" + ".jpg";
+
+                File mydir = new File(root, nomePasta);
+                File file = new File(mydir, nome);
+
+                if(mydir.exists()) mydir.mkdirs();
 
                 try{
-                    nome = mydir + "/Imagens/" + "AssinaturaPrestador" + ".jpg";
-                    out = new FileOutputStream(nome);
+                    mydir.mkdirs();
+                    mydir.createNewFile();
+                    out = new FileOutputStream(file);
                     b.compress(Bitmap.CompressFormat.JPEG, 60, out);
                     out.flush();
                     out.close();
@@ -72,7 +79,7 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                 }
 
                 Intent it = new Intent(AssinaturaPrestadorActivity.this, ConfiguracaoActivity.class);
-                startActivity(it);
+              //  startActivity(it);
             }
         });
     }

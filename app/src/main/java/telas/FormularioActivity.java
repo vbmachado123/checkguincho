@@ -1,21 +1,45 @@
 package telas;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.balbino.checkguincho.R;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
+import com.google.android.gms.common.api.Response;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+
+import java.security.cert.Extension;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import dao.CorDao;
 import dao.InspecaoDao;
@@ -30,6 +54,7 @@ import model.Localizacao;
 import model.Marca;
 import model.Modelo;
 import model.Usuario;
+import util.ConfiguracaoFirebase;
 
 public class FormularioActivity extends AppCompatActivity {
 
@@ -57,6 +82,8 @@ public class FormularioActivity extends AppCompatActivity {
     private Button proximo;
 
     private Toolbar toolbar;
+
+    private double idMarcaEscolhida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +128,19 @@ public class FormularioActivity extends AppCompatActivity {
         placa = (EditText) findViewById(R.id.etPlaca);
         recusaInspecao = (CheckBox) findViewById(R.id.cbRecusaInspecao);
 
+        marca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirDialogMarca();
+            }
+        });
+        modelo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirDialogModelo();
+            }
+        });
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Formulário de Inspeção");
         setSupportActionBar(toolbar);
@@ -114,6 +154,17 @@ public class FormularioActivity extends AppCompatActivity {
                 if(campo) salvaNoBanco();
             }
         });
+    }
+
+    private void abrirDialogMarca() {
+        Gson gson = new Gson();
+        String jsonMarca = new Marca().pegajson();
+       /* gson.fromJson(jsonMarca, Marca.class);*/
+        ArrayList<String> teste = new ArrayList<>();
+    }
+
+    private void abrirDialogModelo() {
+
     }
 
     private boolean validaCampoVazio() {

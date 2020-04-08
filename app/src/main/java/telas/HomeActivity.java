@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,7 +25,10 @@ import android.widget.Toast;
 import com.balbino.checkguincho.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import dao.UsuarioDao;
 import model.Usuario;
@@ -70,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
         atendimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //criarPasta();
                 assinaturaPrestador(AtendimentoActivity.class);
             }
         });
@@ -77,9 +82,33 @@ public class HomeActivity extends AppCompatActivity {
         configuracao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               assinaturaPrestador(ConfiguracaoActivity.class);
+                //criarPasta();
+                assinaturaPrestador(ConfiguracaoActivity.class);
             }
         });
+    }
+
+    private void criarPasta() {
+
+        BitmapDrawable drawable = (BitmapDrawable) imagemLogo.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+        OutputStream out = null;
+        File mydir = new File(Environment.getExternalStorageDirectory() + "/CheckGuincho");
+        String caminhoLogo = mydir + "/Imagens/" + "logo" + ".png";
+        File logo = new File(caminhoLogo);
+        if( !(logo.exists()) ){
+            mydir.mkdir();
+            try {
+                out = new FileOutputStream(caminhoLogo);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, out);
+                out.flush();
+                out.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void assinaturaPrestador(Class c){
@@ -94,7 +123,6 @@ public class HomeActivity extends AppCompatActivity {
         } else existe = true;
 
         if(existe) acessaActivity(c);
-
     }
 
     private void acessaActivity(Class c) {

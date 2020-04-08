@@ -34,8 +34,8 @@ public class Usuario implements Serializable {
     public String salvar(){
         String identificador = Base64Custom.codificarBase64(email);
         DatabaseReference refenciaFirebase = ConfiguracaoFirebase.getFirebaseDatabase();
-        refenciaFirebase.child("usuarios").child(identificador).setValue(this);
-
+        refenciaFirebase.child("usuarios").push();
+        refenciaFirebase.push().child("usuarios").child(identificador).setValue(this);
         return identificador;
     }
 
