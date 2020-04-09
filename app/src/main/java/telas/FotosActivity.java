@@ -229,6 +229,8 @@ public class FotosActivity extends AppCompatActivity {
                 abrirDialogEscolha();
                 return true;
             case R.id.item_sincroniza:
+                Intent it = new Intent(FotosActivity.this, FotosActivity.class);
+                startActivity(it);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
