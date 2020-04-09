@@ -231,6 +231,8 @@ public class FormularioActivity extends AppCompatActivity {
         localizacao.setIdInspecao((int) idInspecao);
         localizacaoDao.atualizar(localizacao);
 
+        Log.i("Inspecao", "" + inspecao.getTelefone());
+
         if(intInspecao == 1) acessaActivity(AssinaturaRecusaActivity.class);
         else if(intInspecao == 0) acessaActivity(CheckListActivity.class);
     }

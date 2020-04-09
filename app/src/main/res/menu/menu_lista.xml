@@ -10,9 +10,11 @@
         android:title="@string/texto_sair"
         android:orderInCategory="200" app:showAsAction="never"/>
 
-    <item android:id="@+id/item_search" android:title="Pesquisar"
-        android:orderInCategory="300" app:showAsAction="ifRoom"
+    <item android:id="@+id/item_pesquisa"
+        android:title="Pesquisa"
+        android:orderInCategory="300"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"
         android:icon="@drawable/ic_search"
         />
-
 </menu>

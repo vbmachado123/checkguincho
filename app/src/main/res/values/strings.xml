@@ -72,4 +72,10 @@
     <string name="botao_chegadaAoDestino">Chegada ao Destino</string>
     <string name="texto_configuracoes">Configurações</string>
     <string name="texto_sair">Sair</string>
+
+    <string-array name="camera_item">
+        <item>Painel</item>
+        <item>Lateral</item>
+        <item>Frente</item>
+    </string-array>
 </resources>

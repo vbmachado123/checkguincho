@@ -10,7 +10,7 @@
         android:title="@string/texto_sair"
         android:orderInCategory="200" app:showAsAction="never"/>
 
-    <item android:id="@+id/item_lista" android:title="Lista"
+    <item android:id="@+id/item_camera" android:title="Camera"
         android:orderInCategory="300" app:showAsAction="ifRoom"
         android:icon="@drawable/ic_camera"
         />

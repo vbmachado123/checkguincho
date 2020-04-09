@@ -1,5 +1,6 @@
 package telas;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,6 +18,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -74,7 +76,6 @@ public class HomeActivity extends AppCompatActivity {
         atendimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //criarPasta();
                 assinaturaPrestador(AtendimentoActivity.class);
             }
         });
@@ -82,7 +83,6 @@ public class HomeActivity extends AppCompatActivity {
         configuracao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //criarPasta();
                 assinaturaPrestador(ConfiguracaoActivity.class);
             }
         });
@@ -135,5 +135,23 @@ public class HomeActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_configuracoes, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.itemConfiguracoes:
+                acessaActivity(ConfiguracaoActivity.class);
+                return true;
+            case R.id.itemSair:
+                return true;
+            case R.id.item_lista:
+                acessaActivity(ListaInspecaoActivity.class);
+                return true;
+            case R.id.item_sincroniza:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

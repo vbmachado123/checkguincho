@@ -24,7 +24,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import dao.InspecaoDao;
 import model.Desenho;
+import model.Inspecao;
 
 public class AssinaturaRecusaActivity extends AppCompatActivity {
 

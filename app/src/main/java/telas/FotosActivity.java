@@ -1,10 +1,13 @@
 package telas;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +17,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,12 +30,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import dao.FotosDao;
+import dao.InspecaoDao;
+import model.FotosInspecao;
+import model.Inspecao;
+
 public class FotosActivity extends AppCompatActivity {
 
     private TextView tvPainel, tvLateral, tvFrente;
     private ImageView ivPainel, ivLateral, ivFrente;
     private static final int iPainel = 1, iLateral = 2, iFrente = 3;
-    private int verificaPainel, verificaLateral, verificaFrente;
+    private int verificaPainel = 0, verificaLateral = 0, verificaFrente = 0;
     private Button proximo;
     private Toolbar toolbar;
     private Bitmap imagemPainel, imagemLateral, imagemFrente;
@@ -111,10 +120,27 @@ public class FotosActivity extends AppCompatActivity {
         proximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(FotosActivity.this, AssinaturaRetiraActivity.class);
-                startActivity(it);
+               if(verificaPainel != 0 && verificaFrente != 0 && verificaLateral != 0)
+                   salvarImagens();
+               else
+                   Toast.makeText(FotosActivity.this, "Fotografe o veiculo para prosseguir..!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void salvarImagens() {
+        FotosInspecao fotos = new FotosInspecao();
+        FotosDao dao = new FotosDao(this);
+        Inspecao i = new InspecaoDao(this).recupera();
+
+        fotos.setIdInspecao(i.getId());
+        fotos.setCaminhoFotoPainel(currentPainelPath);
+        fotos.setCaminhoFotoFrente(currentFrentePath);
+        fotos.setCaminhoFotoLado(currentLateralPath);
+        dao.inserir(fotos);
+
+        Intent it = new Intent(FotosActivity.this, AssinaturaRetiraActivity.class);
+        startActivity(it);
     }
 
     @Override
@@ -136,12 +162,12 @@ public class FotosActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            if(path != null) {
+            if(file != null) {
                  imageUri = FileProvider.getUriForFile(
                         this, "com.balbino.checkguincho.fileprovider", file);
                 camera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(camera, valor);
             }
-            startActivityForResult(camera, valor);
         }
     }
 
@@ -156,16 +182,19 @@ public class FotosActivity extends AppCompatActivity {
                         currentPainelPath = String.valueOf(file);
                         imagemPainel = BitmapFactory.decodeFile(currentPainelPath);
                         ivPainel.setImageBitmap(imagemPainel);
+                        verificaPainel = 1;
                         break;
                     case iLateral:
                         currentLateralPath = String.valueOf(file);
                         imagemLateral = BitmapFactory.decodeFile(currentLateralPath);
                         ivLateral.setImageBitmap(imagemLateral);
+                        verificaLateral = 1;
                         break;
                     case iFrente:
                         currentFrentePath = String.valueOf(file);
                         imagemFrente = BitmapFactory.decodeFile(currentFrentePath);
                         ivFrente.setImageBitmap(imagemFrente);
+                        verificaFrente = 1;
                         break;
                 }
             } catch (Exception e){
@@ -175,9 +204,60 @@ public class FotosActivity extends AppCompatActivity {
     }
 
     private File getImageFile(String parteVeiculo) throws IOException{
-        file = new File(Environment.getExternalStorageDirectory() + "/CheckGuincho" + "/Imagens/" + parteVeiculo + System.currentTimeMillis()  +".jpg");
-        if(file.exists()) file.mkdir();
-       /* FileOutputStream stream = new FileOutputStream(file);*/
-        return file;
+        String root = Environment.getExternalStorageDirectory().getAbsolutePath();
+        String nomePasta = "/CheckGuincho/Imagens";
+        String arquivo = parteVeiculo + System.currentTimeMillis() + ".jpg";
+
+        File mydir = new File(root, nomePasta);
+        File fileFoto = new File(mydir, arquivo);
+
+        if(mydir.exists()) mydir.mkdirs();
+
+        return fileFoto;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.itemConfiguracoes:
+                Toast.makeText(this, "Não é possível sair agora", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.itemSair:
+                Toast.makeText(this, "Não é possível sair agora", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item_camera:
+                abrirDialogEscolha();
+                return true;
+            case R.id.item_sincroniza:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void abrirDialogEscolha() {
+        String[] listItem = getResources().getStringArray(R.array.camera_item);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Escolha uma opção");
+        builder.setSingleChoiceItems(listItem, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case 0:
+                            tirarFoto("o painel", currentPainelPath, iPainel);
+                            break;
+                        case 1:
+                            tirarFoto("a lateral", currentLateralPath, iLateral);
+                            break;
+                        case 2:
+                            tirarFoto("a frente", currentFrentePath, iFrente);
+                            break;
+
+                    }
+                    dialog.dismiss();
+            }
+        }).create();
+            builder.show();
     }
 }
