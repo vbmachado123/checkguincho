@@ -47,21 +47,23 @@ public class ExibePDFActivity extends AppCompatActivity {
     fabEnviar.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            enviarArquivo();
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) enviarArquivoM();
+             else enviarArquivo();
         }
     });
     }
 
-    private void enviarArquivo() {
+    private void enviarArquivoM() {
         Intent enviar = new Intent();
-     /*   if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
-            *//* NECESSÁRIO SOLICITAÇÃO ESPECIAL *//*
             uri = FileProvider.getUriForFile(
                     this, "com.balbino.checkguincho.fileprovider", file);
             enviar.putExtra(Intent.EXTRA_STREAM, uri);
             enviar.setType("application/pdf");
             startActivity(Intent.createChooser(enviar, "Enviar documento via..."));
-        }*/
+    }
+
+    private void enviarArquivo() {
+        Intent enviar = new Intent();
             uri = Uri.fromFile(file);
             enviar.setAction(Intent.ACTION_SEND);
             enviar.putExtra(Intent.EXTRA_STREAM, uri);
