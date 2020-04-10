@@ -73,7 +73,7 @@
 
             <Button
                 android:layout_marginTop="40dp"
-                android:id="@+id/btAtendimento"
+                android:id="@+id/btFinaliza"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_style"

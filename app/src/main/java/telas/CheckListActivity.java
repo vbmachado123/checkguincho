@@ -20,7 +20,7 @@ import model.Inspecao;
 
 public class CheckListActivity extends AppCompatActivity {
 
-    private CheckBox radio, estepe, macaco, triangulo, extintor, calotas, documentos;
+    private CheckBox radio, estepe, macaco, triangulo, extintor, calotas, documentos, chaveRodas;
     private CheckBox tapetesBorracha, tapetesCarpete, rodaLiga, faroisAux, chaves;
     private CheckBox bateria, retrovisorEletrico, bagageiro, rack, carter, moto;
 
@@ -47,6 +47,7 @@ public class CheckListActivity extends AppCompatActivity {
         radio = (CheckBox) findViewById(R.id.cbRadio);
         estepe = (CheckBox) findViewById(R.id.cbEstepe);
         macaco = (CheckBox) findViewById(R.id.cbMacaco);
+        chaveRodas = (CheckBox) findViewById(R.id.cbChaveRodas);
         triangulo = (CheckBox) findViewById(R.id.cbTriangulo);
         extintor = (CheckBox) findViewById(R.id.cbExtintor);
         calotas = (CheckBox) findViewById(R.id.cbCalotas);
@@ -76,25 +77,27 @@ public class CheckListActivity extends AppCompatActivity {
         checklist = new Checklist();
         String marcado = " X ";
         if(radio.isChecked()) checklist.setRadio(marcado);
-        else if(estepe.isChecked()) checklist.setEstepe(marcado);
-        else if(macaco.isChecked()) checklist.setMacaco(marcado);
-        else if(triangulo.isChecked()) checklist.setTriangulo(marcado);
-        else if(extintor.isChecked()) checklist.setExtintor(marcado);
-        else if(calotas.isChecked()) checklist.setCalotas(marcado);
-        else if(documentos.isChecked()) checklist.setDocumentos(marcado);
-        else if(tapetesBorracha.isChecked()) checklist.setTapetesBorracha(marcado);
-        else if(tapetesCarpete.isChecked()) checklist.setTapetesCarpete(marcado);
-        else if(rodaLiga.isChecked()) checklist.setRodaLiga(marcado);
-        else if(faroisAux.isChecked()) checklist.setFaroisAux(marcado);
-        else if(chaves.isChecked()) checklist.setChaves(marcado);
-        else if(bateria.isChecked()) checklist.setBateria(marcado);
-        else if(retrovisorEletrico.isChecked()) checklist.setRetrovisorEletrico(marcado);
-        else if(bagageiro.isChecked()) checklist.setBagageiro(marcado);
-        else if(rack.isChecked()) checklist.setRack(marcado);
-        else if(carter.isChecked()) checklist.setProtetorCarter(marcado);
-        else if(moto.isChecked()) checklist.setMoto(marcado);
+        if(estepe.isChecked()) checklist.setEstepe(marcado);
+        if(macaco.isChecked()) checklist.setMacaco(marcado);
+        if(chaveRodas.isChecked()) checklist.setChaveRodas(marcado);
+        if(triangulo.isChecked()) checklist.setTriangulo(marcado);
+        if(extintor.isChecked()) checklist.setExtintor(marcado);
+        if(calotas.isChecked()) checklist.setCalotas(marcado);
+        if(documentos.isChecked()) checklist.setDocumentos(marcado);
+        if(tapetesBorracha.isChecked()) checklist.setTapetesBorracha(marcado);
+        if(tapetesCarpete.isChecked()) checklist.setTapetesCarpete(marcado);
+        if(rodaLiga.isChecked()) checklist.setRodaLiga(marcado);
+        if(faroisAux.isChecked()) checklist.setFaroisAux(marcado);
+        if(chaves.isChecked()) checklist.setChaves(marcado);
+        if(bateria.isChecked()) checklist.setBateria(marcado);
+        if(retrovisorEletrico.isChecked()) checklist.setRetrovisorEletrico(marcado);
+        if(bagageiro.isChecked()) checklist.setBagageiro(marcado);
+        if(rack.isChecked()) checklist.setRack(marcado);
+        if(carter.isChecked()) checklist.setProtetorCarter(marcado);
+        if(moto.isChecked()) checklist.setMoto(marcado);
         inspecao = new InspecaoDao(this).recupera();
         checklist.setIdInspecao(inspecao.getId());
+
         ChecklistDao dao = new ChecklistDao(this);
         dao.inserir(checklist);
         Intent it = new Intent(CheckListActivity.this, FiguraActivity.class);

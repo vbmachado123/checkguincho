@@ -21,7 +21,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import dao.UsuarioDao;
 import model.Desenho;
+import model.Usuario;
 
 public class AssinaturaPrestadorActivity extends AppCompatActivity {
 
@@ -78,8 +80,13 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                Usuario usuario = new UsuarioDao(AssinaturaPrestadorActivity.this).recupera();
+                usuario.setCaminhoAssinatura(mydir + "/" + nome);
+                UsuarioDao dao = new UsuarioDao(AssinaturaPrestadorActivity.this);
+                dao.atualizar(usuario);
+
                 Intent it = new Intent(AssinaturaPrestadorActivity.this, ConfiguracaoActivity.class);
-              //  startActivity(it);
+                startActivity(it);
             }
         });
     }

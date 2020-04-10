@@ -22,8 +22,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import dao.ChecklistDao;
 import dao.FigurasDao;
 import dao.InspecaoDao;
+import model.Checklist;
 import model.Desenho;
 import model.FigurasInspecao;
 import model.Inspecao;

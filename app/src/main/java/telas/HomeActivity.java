@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import dao.UsuarioDao;
+import model.Checklist;
 import model.Usuario;
 import util.Permissao;
 
@@ -76,7 +77,9 @@ public class HomeActivity extends AppCompatActivity {
         atendimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                assinaturaPrestador(AtendimentoActivity.class);
+                    //assinaturaPrestador(AtendimentoActivity.class);
+                    assinaturaPrestador(FinalizaActivity.class);
+                //assinaturaPrestador(CheckListActivity.class);
             }
         });
 
