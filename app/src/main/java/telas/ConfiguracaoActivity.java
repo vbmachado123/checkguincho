@@ -1,6 +1,7 @@
 package telas;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,8 +11,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.MenuInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +22,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.balbino.checkguincho.R;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
@@ -49,6 +53,10 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth autenticacao;
+
+    private Uri filePath;
+    private static final int foto = 1000;
+    private Bitmap bitmap;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -88,10 +96,10 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         nomeMotorista = (EditText) findViewById(R.id.etNomeMotorista);
         rgMotorista = (EditText) findViewById(R.id.etRgMotorista);
         telefoneMotorista = (EditText) findViewById(R.id.etTelefoneMorista);
-        imagemLogo = (ImageView) findViewById(R.id.ivLogo);
-        imagemAssinatura = (ImageView) findViewById(R.id.ivAssinatura);
         carregarLogo = (TextView) findViewById(R.id.tvCarregarLogo);
+        imagemLogo = (ImageView) findViewById(R.id.ivLogo);
         assinatura = (TextView) findViewById(R.id.tvAssinatura);
+        imagemAssinatura = (ImageView) findViewById(R.id.ivAssinatura);
         fabSalvar = (FloatingActionButton) findViewById(R.id.fabSalvar);
 
         usuario = dao.recupera();
@@ -103,9 +111,37 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             rgMotorista.setText(usuario.getRgMotorista());
             telefoneMotorista.setText(usuario.getTelefoneMotorista());
         }
-        
+
         /* TEMPORÁRIO */
         imagemLogo.setImageResource(R.drawable.logo);
+
+        assinatura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alterarAssinatura();
+            }
+        });
+
+        imagemAssinatura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alterarAssinatura();
+            }
+        });
+
+        carregarLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alterarLogo();
+            }
+        });
+
+        imagemLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alterarLogo();
+            }
+        });
 
         fabSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +158,55 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         }
     }
 
+    private void alterarLogo() {
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Atenção")
+                .setMessage("Realmente deseja alterar a logo?")
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        /* ALTERAR A LOGO */
+                        Toast.makeText(ConfiguracaoActivity.this, "Escolha uma foto!", Toast.LENGTH_SHORT).show();
+
+                        Intent it = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        if( it.resolveActivity(getPackageManager()) != null )
+                            startActivityForResult(it, foto);
+                    }
+                }).create();
+        dialog.show();
+    }
+
+    private void alterarAssinatura() {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Atenção")
+                .setMessage("Realmente deseja alterar a assinatura?")
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                    }
+                })
+                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        /* ALTERAR A ASSINATURA */
+                        acessaActivity(AssinaturaPrestadorActivity.class);
+                    }
+                }).create();
+        dialog.show();
+    }
+
     private void criarUsuario() {
+        usuario = new Usuario();
+        usuario.setEmail(autenticacao.getCurrentUser().getEmail());
         usuario.setNomeEmpresa(nomeEmpresa.getText().toString());
         usuario.setCnpjEmpresa(cnpjEmpresa.getText().toString());
         usuario.setNomeMorotista(nomeMotorista.getText().toString());
@@ -148,6 +232,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Usuario usuario1 = dao.recupera();
 
+                        usuario.setEmail(autenticacao.getCurrentUser().getEmail());
                         usuario.setNomeEmpresa(nomeEmpresa.getText().toString());
                         usuario.setCnpjEmpresa(cnpjEmpresa.getText().toString());
                         usuario.setNomeMorotista(nomeMotorista.getText().toString());
@@ -155,7 +240,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                         usuario.setTelefoneMotorista(telefoneMotorista.getText().toString());
 
                         if(usuario1 != null) dao.atualizar(usuario);
-                        else dao.inserir(usuario);
+                        else criarUsuario();
 
                         String identificador = Base64Custom.codificarBase64(usuario.getEmail());
 
@@ -166,6 +251,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 }).create();
         dialog.show();
     }
+
     public void acessaActivity(Class c){
         Intent it = new Intent(ConfiguracaoActivity.this, c);
         startActivity(it);
@@ -180,6 +266,44 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.itemConfiguracoes:
+                acessaActivity(ConfiguracaoActivity.class);
+                return true;
+            case R.id.itemSair:
+                deslogarUsuario();
+                return true;
+            case R.id.item_lista:
+                acessaActivity(ListaInspecaoActivity.class);
+                return true;
+            case R.id.item_sincroniza:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void deslogarUsuario() {
+        autenticacao.signOut();
+        acessaActivity(LoginActivity.class);
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && requestCode == foto) {
+            bitmap = null;
+
+            try{
+                filePath = data.getData();
+                bitmap = MediaStore.Images.Media.getBitmap( getContentResolver(), filePath );
+                imagemLogo.setImageBitmap(bitmap);
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }

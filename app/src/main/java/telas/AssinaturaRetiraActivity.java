@@ -1,5 +1,6 @@
 package telas;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -18,6 +19,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -207,5 +209,26 @@ public class AssinaturaRetiraActivity extends AppCompatActivity implements Dialo
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_limpar, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.itemConfiguracoes:
+                acessaActivity();
+                return true;
+            case R.id.itemSair:
+                acessaActivity();
+                return true;
+            case R.id.item_delete:
+                desenho.clear();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void acessaActivity() {
+        Toast.makeText(this, "Não é possível sair agora", Toast.LENGTH_SHORT).show();
     }
 }

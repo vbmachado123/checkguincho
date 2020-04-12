@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.balbino.checkguincho.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,6 +36,7 @@ import java.io.OutputStream;
 import dao.UsuarioDao;
 import model.Checklist;
 import model.Usuario;
+import util.ConfiguracaoFirebase;
 import util.Permissao;
 
 public class HomeActivity extends AppCompatActivity {
@@ -43,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView imagemLogo;
     private String nome;
     private Toolbar toolbar;
+    private FirebaseAuth usuarioAutenticacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,9 @@ public class HomeActivity extends AppCompatActivity {
 
         Permissao permissao = new Permissao();
         permissao.Permissoes(this);
+
+        //Valida sessão
+        usuarioAutenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     }
 
     private void validaCampo() {
@@ -65,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Usuario usuario = new UsuarioDao(this).recupera();
         if(usuario == null) {
-            toolbar.setTitle(usuario.getNomeEmpresa());
+            toolbar.setTitle("CheckGuincho");
             setSupportActionBar(toolbar);
             Toast.makeText(this, "Complete o cadastro para prosseguir!", Toast.LENGTH_SHORT).show();
             acessaActivity(ConfiguracaoActivity.class);
@@ -77,9 +83,8 @@ public class HomeActivity extends AppCompatActivity {
         atendimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    //assinaturaPrestador(AtendimentoActivity.class);
-                    assinaturaPrestador(FinalizaActivity.class);
-                //assinaturaPrestador(CheckListActivity.class);
+                    assinaturaPrestador(AtendimentoActivity.class);
+                    //assinaturaPrestador(FinalizaActivity.class);
             }
         });
 
@@ -147,6 +152,7 @@ public class HomeActivity extends AppCompatActivity {
                 acessaActivity(ConfiguracaoActivity.class);
                 return true;
             case R.id.itemSair:
+                deslogarUsuario();
                 return true;
             case R.id.item_lista:
                 acessaActivity(ListaInspecaoActivity.class);
@@ -156,5 +162,11 @@ public class HomeActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void deslogarUsuario() {
+        usuarioAutenticacao.signOut();
+        acessaActivity(LoginActivity.class);
+        finish();
     }
 }

@@ -17,7 +17,7 @@
         android:id="@+id/tvTelefone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@android:color/black"
         android:textSize="18sp" />
 
 </LinearLayout>
