@@ -68,11 +68,11 @@ public class AssinaturaEntregaActivity extends AppCompatActivity implements Dial
                 FileOutputStream out = null;
                 File mydir = new File(Environment.getExternalStorageDirectory() + "/CheckGuincho");
                 if(mydir.exists()) mydir.mkdir();
+                caminho = mydir + "/Imagens/" + "_" + nomeDialog + "_" + rgDialog + "_" + ".jpg";
 
                 try{
-                    caminho = mydir + "/Imagens/" + "_" + nomeDialog + "_" + rgDialog + "_" + ".jpg";
                     out = new FileOutputStream(caminho);
-                    b.compress(Bitmap.CompressFormat.JPEG, 60, out);
+                    b.compress(Bitmap.CompressFormat.JPEG, 30, out);
                     out.flush();
                     out.close();
                     Toast.makeText(AssinaturaEntregaActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();

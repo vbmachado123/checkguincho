@@ -38,14 +38,13 @@ public class InspecaoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
+     View v = activity.getLayoutInflater().inflate(R.layout.lista_inspecao, parent, false);
+     TextView nome = v.findViewById(R.id.tvNome);
+     TextView telefone = v.findViewById(R.id.tvTelefone);
+     Inspecao inspecaoExibe = inspecao.get(i);
 
-        View v = activity.getLayoutInflater().inflate(R.layout.lista_inspecao, parent, false);
-        TextView nome = v.findViewById(R.id.tvNome);
-        TextView telefone = v.findViewById(R.id.tvTelefone);
-
-        Inspecao insp = inspecao.get(i);
-        nome.setText(insp.getTelefone());
-        telefone.setText(insp.getNomeProprietario());
-        return v;
+     nome.setText(inspecaoExibe.getNomeProprietario());
+     telefone.setText(inspecaoExibe.getTelefone());
+     return v;
     }
 }

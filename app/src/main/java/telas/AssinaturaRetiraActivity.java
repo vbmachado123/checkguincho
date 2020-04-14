@@ -99,13 +99,10 @@ public class AssinaturaRetiraActivity extends AppCompatActivity implements Dialo
                 File mydir = new File(Environment.getExternalStorageDirectory() + "/CheckGuincho");
                 if(mydir.exists()) mydir.mkdir();
 
-               try{
-                   caminho = mydir + "/Imagens/" + "_" + nomeDialog + "_" + rgDialog + "_" + ".jpg";
-                   Log.i("LOG: ", "Figura: " + figuras.getCaminhoFigura());
-                   Log.i("LOG: ", "Figura: " + caminho);
-
+                caminho = mydir + "/Imagens/" + "_" + nomeDialog + "_" + rgDialog + "_" + ".jpg";
+                try{
                     out = new FileOutputStream(caminho);
-                    b.compress(Bitmap.CompressFormat.JPEG, 60, out);
+                    b.compress(Bitmap.CompressFormat.JPEG, 30, out);
                     out.flush();
                     out.close();
                     Toast.makeText(AssinaturaRetiraActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
@@ -174,8 +171,12 @@ public class AssinaturaRetiraActivity extends AppCompatActivity implements Dialo
         l.setIdInspecao(inspecao.getId());
         long idLoc = lDao.insere(l);
 
-        Intent it = new Intent(AssinaturaRetiraActivity.this, DestinoActivity.class);
-        startActivity(it);
+        try{
+            Intent it = new Intent(AssinaturaRetiraActivity.this, DestinoActivity.class);
+            startActivity(it);
+        } catch (OutOfMemoryError e){
+            Toast.makeText(this, "Erro, tente novamente!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void abrirDialog() {

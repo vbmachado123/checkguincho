@@ -5,8 +5,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.GenericLifecycleObserver;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,22 +17,35 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.renderscript.ScriptIntrinsicYuvToRGB;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.balbino.checkguincho.R;
+import com.bumptech.glide.Glide;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 
@@ -53,10 +68,14 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth autenticacao;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private FirebaseUser user;
 
     private Uri filePath;
     private static final int foto = 1000;
     private Bitmap bitmap;
+    private String identificadorUsuario;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -67,10 +86,17 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         toolbar.setTitle("Configurações");
         setSupportActionBar(toolbar);
 
+        /* CONFIGURAÇÕES INICIAIS */
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        identificadorUsuario = autenticacao.getCurrentUser().getEmail();
+
+        usuario = new Usuario();
+
         validaCampo();
         mascaraCampo();
-
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     }
 
     private void mascaraCampo() {
@@ -88,9 +114,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     }
 
     private void validaCampo() {
-        usuario = new Usuario();
         dao = new UsuarioDao(this);
-
         nomeEmpresa = (EditText) findViewById(R.id.etNomeEmpresa);
         cnpjEmpresa = (EditText) findViewById(R.id.etCnpjEmpresa);
         nomeMotorista = (EditText) findViewById(R.id.etNomeMotorista);
@@ -104,6 +128,18 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
         usuario = dao.recupera();
 
+        user = ConfiguracaoFirebase.getUsuarioAtual();
+
+        Uri url = user.getPhotoUrl();
+        if(url != null){
+            Glide.with(this)
+                    .load(url)
+                    .into(imagemLogo);
+        } else{
+            imagemLogo.setImageResource(R.drawable.logo);
+        }
+
+
         if(usuario != null){
             nomeEmpresa.setText(usuario.getNomeEmpresa());
             cnpjEmpresa.setText(usuario.getCnpjEmpresa());
@@ -111,9 +147,6 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             rgMotorista.setText(usuario.getRgMotorista());
             telefoneMotorista.setText(usuario.getTelefoneMotorista());
         }
-
-        /* TEMPORÁRIO */
-        imagemLogo.setImageResource(R.drawable.logo);
 
         assinatura.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,8 +209,11 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                         Toast.makeText(ConfiguracaoActivity.this, "Escolha uma foto!", Toast.LENGTH_SHORT).show();
 
                         Intent it = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        if( it.resolveActivity(getPackageManager()) != null )
-                            startActivityForResult(it, foto);
+                        if( it.resolveActivity(getPackageManager()) != null ){
+                            it.setType("image/*");
+                     /*       it.setAction(Intent.ACTION_GET_CONTENT);*/
+                            startActivityForResult(it,foto);
+                        }
                     }
                 }).create();
         dialog.show();
@@ -205,14 +241,16 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     }
 
     private void criarUsuario() {
-        usuario = new Usuario();
-        usuario.setEmail(autenticacao.getCurrentUser().getEmail());
-        usuario.setNomeEmpresa(nomeEmpresa.getText().toString());
-        usuario.setCnpjEmpresa(cnpjEmpresa.getText().toString());
-        usuario.setNomeMorotista(nomeMotorista.getText().toString());
-        usuario.setRgMotorista(rgMotorista.getText().toString());
-        usuario.setTelefoneMotorista(telefoneMotorista.getText().toString());
-        dao.inserir(usuario);
+        Usuario usuarioInicial = new Usuario();
+        UsuarioDao daoInicial = new UsuarioDao(this);
+
+        usuarioInicial.setNomeEmpresa(nomeEmpresa.getText().toString());
+        usuarioInicial.setCnpjEmpresa(cnpjEmpresa.getText().toString());
+        usuarioInicial.setNomeMorotista(nomeMotorista.getText().toString());
+        usuarioInicial.setRgMotorista(rgMotorista.getText().toString());
+        usuarioInicial.setTelefoneMotorista(telefoneMotorista.getText().toString());
+
+        daoInicial.inserir(usuarioInicial);
     }
 
     private void confirmaSaida() {
@@ -230,26 +268,73 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        UsuarioDao dao = new UsuarioDao(ConfiguracaoActivity.this);
                         Usuario usuario1 = dao.recupera();
 
-                        usuario.setEmail(autenticacao.getCurrentUser().getEmail());
-                        usuario.setNomeEmpresa(nomeEmpresa.getText().toString());
-                        usuario.setCnpjEmpresa(cnpjEmpresa.getText().toString());
-                        usuario.setNomeMorotista(nomeMotorista.getText().toString());
-                        usuario.setRgMotorista(rgMotorista.getText().toString());
-                        usuario.setTelefoneMotorista(telefoneMotorista.getText().toString());
-
-                        if(usuario1 != null) dao.atualizar(usuario);
-                        else criarUsuario();
+                        if(usuario1 != null){
+                            usuario1.setEmail(identificadorUsuario);
+                            usuario1.setNomeEmpresa(nomeEmpresa.getText().toString());
+                            usuario1.setCnpjEmpresa(cnpjEmpresa.getText().toString());
+                            usuario1.setNomeMorotista(nomeMotorista.getText().toString());
+                            usuario1.setRgMotorista(rgMotorista.getText().toString());
+                            usuario1.setTelefoneMotorista(telefoneMotorista.getText().toString());
+                            dao.atualizar(usuario1);
+                        } else criarUsuario();
 
                         String identificador = Base64Custom.codificarBase64(usuario.getEmail());
 
                         reference.child("usuarios").child(identificador).setValue(usuario);
 
-                        acessaActivity(HomeActivity.class);
+                        if( filePath != null) subirImagem(); /* LOGO FOI ALTERADA */
+                        else acessaActivity(HomeActivity.class);
                     }
                 }).create();
         dialog.show();
+    }
+
+    private void subirImagem() {
+
+        if(filePath != null){
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Salvando imagem...");
+            progressDialog.show();
+
+            final StorageReference ref = storageReference
+                    .child(usuario.getNomeEmpresa()).child("logo");
+
+            ref.putFile(filePath)
+                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                             progressDialog.dismiss();
+                             Toast.makeText(ConfiguracaoActivity.this, "Imagem salva com sucesso", Toast.LENGTH_SHORT).show();
+                             acessaActivity(HomeActivity.class);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ConfiguracaoActivity.this, "Não foi possível salvar imagem, tente novamente!", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                            progressDialog.setMessage(" Salvando " + (int)progress + "%");
+                        }
+                    })
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                       Uri url = taskSnapshot.getDownloadUrl();
+                            if(ConfiguracaoFirebase.atualizarFotoUsuario(url)){
+                                Log.i("Foto", "Sucesso ao atualizar imagem");
+                            }
+                        }
+                    });
+        }
     }
 
     public void acessaActivity(Class c){

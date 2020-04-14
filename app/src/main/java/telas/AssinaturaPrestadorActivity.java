@@ -70,7 +70,7 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                     mydir.mkdirs();
                     mydir.createNewFile();
                     out = new FileOutputStream(file);
-                    b.compress(Bitmap.CompressFormat.JPEG, 60, out);
+                    b.compress(Bitmap.CompressFormat.JPEG, 30, out);
                     out.flush();
                     out.close();
                     Toast.makeText(AssinaturaPrestadorActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
@@ -82,10 +82,12 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                Usuario usuario = new UsuarioDao(AssinaturaPrestadorActivity.this).recupera();
-                usuario.setCaminhoAssinatura(mydir + "/" + nome);
                 UsuarioDao dao = new UsuarioDao(AssinaturaPrestadorActivity.this);
-                dao.atualizar(usuario);
+                Usuario usuario = new UsuarioDao(AssinaturaPrestadorActivity.this).recupera();
+                if(usuario != null){
+                    usuario.setCaminhoAssinatura(String.valueOf(file));
+                    dao.atualizar(usuario);
+                } else dao.inserir(usuario);
 
                 Intent it = new Intent(AssinaturaPrestadorActivity.this, ConfiguracaoActivity.class);
                 startActivity(it);

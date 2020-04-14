@@ -68,7 +68,6 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private void mascaraCampo() {
-
         SimpleMaskFormatter smftel = new SimpleMaskFormatter("(NN) NNNNN-NNNN");
         MaskTextWatcher mtwTel = new MaskTextWatcher(telefone, smftel);
         telefone.addTextChangedListener(mtwTel);
@@ -108,6 +107,9 @@ public class CadastroActivity extends AppCompatActivity {
                     usuario.setSenha(senha.getText().toString());
                     usuario.setTelefoneMotorista(telefone.getText().toString());
                     usuario.setNomeEmpresa(nomeEmpresa.getText().toString());
+                    UsuarioDao dao = new UsuarioDao(CadastroActivity.this);
+                    long id = dao.inserir(usuario);
+                    Log.i("ID", String.valueOf(id));
                     cadastrarUsuario();
                 }
             }
@@ -161,15 +163,7 @@ public class CadastroActivity extends AppCompatActivity {
              usuario.setCaminhoImagemLogo(filePath.toString());
              subirImagem();
          }
-
-         salvaNoBancoLocal();
-    }
-
-    private void salvaNoBancoLocal() {
-        UsuarioDao dao = new UsuarioDao(this);
-        long id = dao.inserir(usuario);
-        acessaActivity(ConfiguracaoActivity.class);
-        Log.i("LOG: " , "cadastro: " + id);
+        acessaActivity(HomeActivity.class);
     }
 
     private void subirImagem() {
@@ -179,8 +173,8 @@ public class CadastroActivity extends AppCompatActivity {
                 .child("logo.png");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        byte[] dadosImagem = baos.toByteArray();
         bitmap.compress(Bitmap.CompressFormat.PNG, 50, baos);
+        byte[] dadosImagem = baos.toByteArray();
 
         UploadTask uploadTask = imgRef.putBytes(dadosImagem);
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -225,8 +219,10 @@ public class CadastroActivity extends AppCompatActivity {
         Toast.makeText(this, "Escolha uma foto!", Toast.LENGTH_SHORT).show();
 
         Intent it = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            if( it.resolveActivity(getPackageManager()) != null )
+            if( it.resolveActivity(getPackageManager()) != null ){
+                it.setType("image/*");
                 startActivityForResult(it, foto);
+            }
     }
 
     @Override

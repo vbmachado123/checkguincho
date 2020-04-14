@@ -1,13 +1,19 @@
 package telas;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.balbino.checkguincho.R;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -21,6 +27,8 @@ public class ExibePDFActivity extends AppCompatActivity {
     private FloatingActionButton fabEnviar;
     private File file;
     private Uri uri;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +37,12 @@ public class ExibePDFActivity extends AppCompatActivity {
         //Recuperando o caminho do documento
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Documento Inspeção");
+        setSupportActionBar(toolbar);
 
         fabEnviar = (FloatingActionButton) findViewById(R.id.fabEnviar);
 
@@ -69,6 +83,32 @@ public class ExibePDFActivity extends AppCompatActivity {
             enviar.putExtra(Intent.EXTRA_STREAM, uri);
             enviar.setType("application/pdf");
             startActivity(Intent.createChooser(enviar, "Enviar documento via..."));
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_pdf, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_salvar:
+                Toast.makeText(this, "Documento salvo em: " + file, Toast.LENGTH_SHORT).show();
+                acessaActivity(HomeActivity.class);
+                return true;
+            case R.id.item_home:
+                acessaActivity(HomeActivity.class);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void acessaActivity(Class c) {
+        Intent it = new Intent(ExibePDFActivity.this, c);
+        startActivity(it);
     }
 }

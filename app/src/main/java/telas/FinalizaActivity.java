@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -15,9 +16,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.balbino.checkguincho.R;
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseUser;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Image;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Locale;
 
 import dao.ChecklistDao;
@@ -27,12 +32,13 @@ import model.Checklist;
 import model.Inspecao;
 import model.MoneyTextWatcher;
 import model.Pdf;
+import util.ConfiguracaoFirebase;
 import util.GeraPDF;
 
 public class FinalizaActivity extends AppCompatActivity {
 
     private EditText valorInspecao, observacao;
-    private ImageView ivLogo;
+    private ImageView imagemLogo;
     private Button btFinaliza;
     private Toolbar toolbar;
 
@@ -47,10 +53,22 @@ public class FinalizaActivity extends AppCompatActivity {
         valorInspecao = (EditText) findViewById(R.id.etValor);
         observacao = (EditText) findViewById(R.id.etObsercavao);
         btFinaliza = (Button) findViewById(R.id.btFinaliza);
+        imagemLogo = (ImageView) findViewById(R.id.ivLogo);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Finalizar Atendimento");
         setSupportActionBar(toolbar);
+
+        //Recuperar dados do usuario
+        FirebaseUser user = ConfiguracaoFirebase.getUsuarioAtual();
+        Uri url = user.getPhotoUrl();
+        if(url != null){
+            Glide.with(this)
+                    .load(url)
+                    .into(imagemLogo);
+        } else{
+            imagemLogo.setImageResource(R.drawable.logo);
+        }
 
         Locale mLocale = new Locale("pt", "BR");
 
@@ -73,22 +91,26 @@ public class FinalizaActivity extends AppCompatActivity {
 
                 try {
                     documento = pdf.GerarPDF(String.valueOf(arquivo), obs, FinalizaActivity.this);
+                } catch (FileNotFoundException e){
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                String caminhoDocumento = root + nomePasta + "/" + nomeArquivo;
+                if(arquivo.canRead()){
+                    String caminhoDocumento = root + nomePasta + "/" + nomeArquivo;
 
-                Pdf pdfModel = new Pdf();
-                pdfModel.setCaminhoDocumento(caminhoDocumento);
-                pdfModel.setIdInspecao(i.getId());
-                PdfDao dao = new PdfDao(FinalizaActivity.this);
-                dao.inserir(pdfModel);
-                Intent it = new Intent(FinalizaActivity.this, ExibePDFActivity.class);
-                it.putExtra("documento", pdfModel.getCaminhoDocumento());
+                    Pdf pdfModel = new Pdf();
+                    pdfModel.setCaminhoDocumento(caminhoDocumento);
+                    pdfModel.setIdInspecao(i.getId());
+                    PdfDao dao = new PdfDao(FinalizaActivity.this);
+                    dao.inserir(pdfModel);
 
-                startActivity(it);
+                    Intent it = new Intent(FinalizaActivity.this, ExibePDFActivity.class);
+                    it.putExtra("documento", pdfModel.getCaminhoDocumento());
 
+                    startActivity(it);
+                }
             }
         });
     }

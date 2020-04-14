@@ -20,6 +20,16 @@ public class PdfDao {
         banco = conexao.getReadableDatabase();
     }
 
+    public Pdf getById(int id){
+        Cursor cursor = banco.rawQuery("SELECT * FROM pdf WHERE idInspecao = " + id, null);
+
+        if(cursor.moveToFirst()){
+            pdf = new Pdf();
+            pdf.setCaminhoDocumento(cursor.getString(2));
+        }
+        return pdf;
+    }
+
     public Pdf recupera(){
         Cursor cursor = banco.rawQuery("SELECT * FROM pdf", null);
         cursor.moveToFirst();

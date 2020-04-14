@@ -1,5 +1,6 @@
 package telas;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -16,11 +17,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.balbino.checkguincho.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -34,6 +37,7 @@ import dao.UsuarioDao;
 import model.Localizacao;
 import model.TipoRegistro;
 import model.Usuario;
+import util.ConfiguracaoFirebase;
 
 public class AtendimentoActivity extends AppCompatActivity {
 
@@ -51,11 +55,16 @@ public class AtendimentoActivity extends AppCompatActivity {
     private double latitude = 0.0;
     private double longitude = 0.0;
 
+    private FirebaseAuth usuarioAutenticacao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atendimento);
         validaCampo();
+
+        //Valida sessão
+        usuarioAutenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     }
 
     private void validaCampo() {
@@ -152,5 +161,36 @@ public class AtendimentoActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_configuracoes, menu);
         return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.itemConfiguracoes:
+                acessaActivity(ConfiguracaoActivity.class);
+                return true;
+            case R.id.itemSair:
+                deslogarUsuario();
+                return true;
+            case R.id.item_lista:
+                acessaActivity(ListaInspecaoActivity.class);
+                return true;
+            case R.id.item_sincroniza:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void acessaActivity(Class c) {
+        Intent it = new Intent(AtendimentoActivity.this, c);
+        startActivity(it);
+    }
+
+    private void deslogarUsuario() {
+        usuarioAutenticacao.signOut();
+        acessaActivity(LoginActivity.class);
+        finish();
     }
 }

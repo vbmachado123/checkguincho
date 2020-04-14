@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.balbino.checkguincho.R;
-import com.google.firebase.database.core.Context;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -52,7 +51,6 @@ import model.Usuario;
 
 import static android.app.PendingIntent.getActivity;
 
-
 public class GeraPDF {
     private File file;
     private Document documento;
@@ -60,7 +58,7 @@ public class GeraPDF {
     private Font fontBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
     private Font fontNormal = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL);
 
-    public Document GerarPDF(String destino, String observacao, Activity activity)throws Exception{
+    public Document GerarPDF(String destino, String observacao, Activity activity)throws Exception {
         /* RECUPERAR OS OBJETOS PARA EXIBIR */
         Checklist checklist = new ChecklistDao(activity).recupera();
         Cor cor = new CorDao(activity).recupera();
@@ -77,9 +75,6 @@ public class GeraPDF {
         SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat horaFormatada = new SimpleDateFormat("HH:mm");
 
-        String[] assinaturaRetira = figuras.getCaminhoAssinaturaRetira().split("_");
-        String[] assinaturaEntrega = figuras.getCaminhoAssinaturaEntrega().split("_");
-
         Rectangle pagesize = new Rectangle(PageSize.A4);
         documento = new Document(pagesize);
         PdfWriter.getInstance(documento, new FileOutputStream(destino));
@@ -93,7 +88,7 @@ public class GeraPDF {
 
         Paragraph cabecalho = new Paragraph();
         cabecalho.add(new Phrase(usuario.getNomeEmpresa() + "\n" +
-                usuario.getNomeMorotista() + "\n" + usuario.getEmail() + "\n" +
+                usuario.getNomeMorotista() + "\n" + "\n" +
                 usuario.getTelefoneMotorista()));
         cabecalho.setAlignment(Element.ALIGN_RIGHT);
         documento.add(cabecalho);
@@ -153,7 +148,7 @@ public class GeraPDF {
         documento.add(linha3);
 
         Paragraph linha4 = new Paragraph();
-        if( inspecao.getInspecao() == 1 ){ //Recusa inspeção
+        if( inspecao.getInspecao() != 0 ){ //Recusa inspeção
             linha4.add(new Phrase("Origem: ", fontBold));
             linha4.add(new Phrase("\nDestino: ", fontBold));
             documento.add(linha4);
@@ -175,7 +170,7 @@ public class GeraPDF {
             documento.add(imagemAssinaturaRecusa);
 
             int pula = 0;
-            while(pula <= 20){
+            while(pula <= 22){
                 documento.add(branco);
                 pula++;
             }
@@ -244,6 +239,9 @@ public class GeraPDF {
                 documento.add(branco);
                 pula++;
             }
+
+            String[] assinaturaRetira = figuras.getCaminhoAssinaturaRetira().split("_");
+            String[] assinaturaEntrega = figuras.getCaminhoAssinaturaEntrega().split("_");
 
             /* ASSINATURAS */
             Paragraph assinaRetira = new Paragraph();
@@ -324,7 +322,6 @@ public class GeraPDF {
             imagemFrente.scalePercent (x, y);
             imagemFrente.setAbsolutePosition(aX,200);
             documento.add(imagemFrente);
-
         }
 
         documento.close();

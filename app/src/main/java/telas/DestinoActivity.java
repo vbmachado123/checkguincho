@@ -12,6 +12,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.balbino.checkguincho.R;
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -35,10 +38,11 @@ import dao.TipoRegistroDao;
 import model.Inspecao;
 import model.Localizacao;
 import model.TipoRegistro;
+import util.ConfiguracaoFirebase;
 
 public class DestinoActivity extends AppCompatActivity {
 
-    private ImageView ivLogo;
+    private ImageView imagemLogo;
     private TextView tvdata, tvLocalizacao;
     private Button chegadaDestino;
 
@@ -62,7 +66,7 @@ public class DestinoActivity extends AppCompatActivity {
     }
 
     private void validaCampo() {
-        ivLogo = (ImageView) findViewById(R.id.ivLogo);
+        imagemLogo = (ImageView) findViewById(R.id.ivLogo);
         tvdata = (TextView) findViewById(R.id.tvData);
         tvLocalizacao = (TextView) findViewById(R.id.tvLocalizacao);
         chegadaDestino = (Button) findViewById(R.id.btChegadaDestino);
@@ -73,6 +77,17 @@ public class DestinoActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Chegada ao Destino");
         setSupportActionBar(toolbar);
+
+        //Recuperar dados do usuario
+        FirebaseUser user = ConfiguracaoFirebase.getUsuarioAtual();
+        Uri url = user.getPhotoUrl();
+        if(url != null){
+            Glide.with(this)
+                    .load(url)
+                    .into(imagemLogo);
+        } else{
+            imagemLogo.setImageResource(R.drawable.logo);
+        }
 
         /* RECUPERANDO A DATA */
         SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy - HH:mm");

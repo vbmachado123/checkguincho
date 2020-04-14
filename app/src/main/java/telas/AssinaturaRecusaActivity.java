@@ -44,6 +44,9 @@ public class AssinaturaRecusaActivity extends AppCompatActivity {
 
         proximo = (Button) findViewById(R.id.btSalvarAssinatura);
 
+        Inspecao i = new InspecaoDao(this).recupera();
+        Log.i("Telefone: ", i.getTelefone());
+
         exibeDialog();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -63,11 +66,11 @@ public class AssinaturaRecusaActivity extends AppCompatActivity {
                 FileOutputStream out = null;
                 File mydir = new File(Environment.getExternalStorageDirectory() + "/CheckGuincho");
                 if(mydir.exists()) mydir.mkdir();
+                nome = mydir + "/Imagens/" + "_AssinaturaRecusa_" + System.currentTimeMillis() + ".jpg";
 
                 try{
-                    nome = mydir + "/Imagens/" + "_AssinaturaRecusa_" + System.currentTimeMillis() + ".jpg";
                     out = new FileOutputStream(nome);
-                    b.compress(Bitmap.CompressFormat.JPEG, 60, out);
+                    b.compress(Bitmap.CompressFormat.JPEG, 30, out);
                     out.flush();
                     out.close();
                     Toast.makeText(AssinaturaRecusaActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
@@ -78,6 +81,12 @@ public class AssinaturaRecusaActivity extends AppCompatActivity {
                 } catch (Exception e){
                     e.printStackTrace();
                 }
+
+                InspecaoDao dao = new InspecaoDao(AssinaturaRecusaActivity.this);
+                Inspecao i = dao.recupera();
+                i.setCaminhoAssinaturaRecusa(nome);
+
+                dao.atualizar(i);
 
                 Intent it = new Intent(AssinaturaRecusaActivity.this, FinalizaActivity.class);
                 startActivity(it);

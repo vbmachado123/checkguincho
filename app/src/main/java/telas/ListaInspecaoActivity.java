@@ -20,13 +20,18 @@ import android.widget.Toast;
 
 import com.balbino.checkguincho.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import dao.InspecaoDao;
+import dao.PdfDao;
 import model.Inspecao;
 import model.InspecaoAdapter;
+import model.Pdf;
+import util.ConfiguracaoFirebase;
 
 public class ListaInspecaoActivity extends AppCompatActivity {
 
@@ -38,6 +43,7 @@ public class ListaInspecaoActivity extends AppCompatActivity {
     private List<Inspecao> inspecoesFiltradas = new ArrayList<>();
 
     private FloatingActionButton fab;
+    private FirebaseAuth usuarioAutenticacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,8 @@ public class ListaInspecaoActivity extends AppCompatActivity {
 
         validaCampo();
 
+        //Valida sessão
+        usuarioAutenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     }
 
     private void validaCampo() {
@@ -124,14 +132,27 @@ public class ListaInspecaoActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.itemSair:
+                deslogarUsuario();
                 return true;
             case R.id.itemConfiguracoes:
+                acessaActivity(ConfiguracaoActivity.class);
                 return true;
             case R.id.item_pesquisa:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void deslogarUsuario() {
+        usuarioAutenticacao.signOut();
+        acessaActivity(LoginActivity.class);
+        finish();
+    }
+
+    private void acessaActivity(Class c) {
+        Intent it = new Intent(ListaInspecaoActivity.this, c);
+        startActivity(it);
     }
 
     @Override
@@ -157,7 +178,7 @@ public class ListaInspecaoActivity extends AppCompatActivity {
 
                         inspecoesFiltradas.remove(inspecaoExcluir);
                         inspecoes.remove(inspecaoExcluir);
-                     // dao.exclui(inspecaoExcluir);
+                        dao.excluir(inspecaoExcluir);
                         listView.invalidateViews();
 
                     }
@@ -166,6 +187,17 @@ public class ListaInspecaoActivity extends AppCompatActivity {
     }
 
     public void visualizar(MenuItem item){
+        AdapterView.AdapterContextMenuInfo menuInfo =
+                ( AdapterView.AdapterContextMenuInfo ) item.getMenuInfo();
 
+        final Inspecao inspecaoVisualizar = inspecoesFiltradas.get(menuInfo.position);
+        Pdf pdf = new PdfDao(this).getById(inspecaoVisualizar.getId());
+
+        File file = new File(pdf.getCaminhoDocumento());
+        if(pdf.getCaminhoDocumento() != null && file.length() > 0 && file.exists()) {
+            Intent it = new Intent(ListaInspecaoActivity.this, ExibePDFActivity.class);
+            it.putExtra("documento", pdf.getCaminhoDocumento());
+            startActivity(it);
+        } else Toast.makeText(this, "Documento indisponível", Toast.LENGTH_SHORT).show();
     }
 }

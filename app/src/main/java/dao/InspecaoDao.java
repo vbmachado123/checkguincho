@@ -75,13 +75,36 @@ public class InspecaoDao {
             inspecao.setIdCor(cursor.getInt(3));
             inspecao.setIdUsuario(cursor.getInt(4));
             inspecao.setNomeProprietario(cursor.getString(5));
-            inspecao.setAno(cursor.getInt(6));
-            inspecao.setPlaca(cursor.getString(7));
-            inspecao.setInspecao(cursor.getInt(8));
-            inspecao.setCaminhoAssinaturaRecusa(cursor.getString(9));
+            inspecao.setTelefone(cursor.getString(6));
+            inspecao.setAno(cursor.getInt(7));
+            inspecao.setPlaca(cursor.getString(8));
+            inspecao.setInspecao(cursor.getInt(9));
+            inspecao.setCaminhoAssinaturaRecusa(cursor.getString(10));
 
             inspecoes.add(inspecao);
         }
         return inspecoes;
+    }
+
+    public void excluir(Inspecao i){
+        banco.delete("inspecao", "id = ?",
+                new String[]{String.valueOf(i.getId())});
+    }
+
+    public void atualizar(Inspecao inspecao){
+        ContentValues values = new ContentValues();
+        values.put("idMarca", inspecao.getIdMarca());
+        values.put("idModelo", inspecao.getIdModelo());
+        values.put("idCor", inspecao.getIdCor());
+        values.put("idUsuario", inspecao.getIdUsuario());
+        values.put("nomeProprietario", inspecao.getNomeProprietario());
+        values.put("telefone", inspecao.getTelefone());
+        values.put("ano", inspecao.getAno());
+        values.put("placa", inspecao.getPlaca());
+        values.put("inspecao", inspecao.getInspecao());
+        values.put("caminhoAssinaturaRecusa", inspecao.getCaminhoAssinaturaRecusa());
+
+        banco.update("inspecao", values, "id = ?",
+                new String[]{String.valueOf(inspecao.getId())});
     }
 }

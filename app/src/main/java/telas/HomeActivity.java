@@ -25,7 +25,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.balbino.checkguincho.R;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -80,11 +82,22 @@ public class HomeActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
+        //Recuperar dados do usuario
+        FirebaseUser user = ConfiguracaoFirebase.getUsuarioAtual();
+        Uri url = user.getPhotoUrl();
+        if(url != null){
+            Glide.with(this)
+                    .load(url)
+                    .into(imagemLogo);
+        } else{
+            imagemLogo.setImageResource(R.drawable.logo);
+        }
+
         atendimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    assinaturaPrestador(AtendimentoActivity.class);
-                    //assinaturaPrestador(FinalizaActivity.class);
+                   assinaturaPrestador(AtendimentoActivity.class);
+                   // assinaturaPrestador(FinalizaActivity.class);
             }
         });
 
