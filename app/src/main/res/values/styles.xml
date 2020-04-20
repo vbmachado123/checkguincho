@@ -1,26 +1,48 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. Theme.AppCompat.NoActionBar  Theme.AppCompat.Light.DarkActionBar-->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
+        <item name="android:textAppearance">@style/MyText</item>
+        <!-- MUDANDO O ESTILO-->
+        <item name="android:editTextColor">@android:color/secondary_text_light</item>
+        <item name="android:textColor">@android:color/secondary_text_light</item>
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlHighlight">@android:color/secondary_text_light</item>
+        <item name="android:itemBackground">@android:color/white</item>
     </style>
 
-    <style name="TitleColorStyle" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:textColor">@android:color/white</item>
+    <style name="TitleColorStyle" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-  <!--  <style name="AppTheme" parent="android:Theme.Holo.Light">
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/darker_gray</item>
+    </style>
 
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
-        <item name="android:actionDropDownStyle">@android:style/Widget.Holo.Spinner</item>
-        <item name="android:titleTextStyle">@style/TitleColorStyle</item>
-    </style>-->
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="titleTextStyle">@android:color/darker_gray</item>
+    </style>
+
+    <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
+    <style name="Theme" parent="@android:style/TextAppearance" tools:ignore="ResourceCycle">
+        <item name="android:textAppearance">@style/MyText</item>
+    </style>
+
+    <style name="MyText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
 
 </resources>
 
