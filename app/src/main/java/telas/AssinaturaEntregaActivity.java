@@ -84,7 +84,7 @@ public class AssinaturaEntregaActivity extends AppCompatActivity implements Dial
                     e.printStackTrace();
                 }
 
-                dao = new FigurasDao(AssinaturaEntregaActivity.this);
+               dao = new FigurasDao(AssinaturaEntregaActivity.this);
 
                 figuras.setCaminhoAssinaturaEntrega(caminho);
                 dao.atualizar(figuras);

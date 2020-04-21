@@ -60,12 +60,12 @@ public class GeraPDF {
 
     public Document GerarPDF(String destino, String observacao, Activity activity)throws Exception {
         /* RECUPERAR OS OBJETOS PARA EXIBIR */
-        Checklist checklist = new ChecklistDao(activity).recupera();
         Cor cor = new CorDao(activity).recupera();
+        Checklist checklist = new ChecklistDao(activity).recupera();
         FigurasInspecao figuras = new FigurasDao(activity).recupera();
         FotosInspecao fotos = new FotosDao(activity).recupera();
-        Inspecao inspecao = new InspecaoDao(activity).recupera();
         Localizacao localizacao = new LocalizacaoDao(activity).recupera();
+        Inspecao inspecao = new InspecaoDao(activity).recupera();
         Marca marca = new MarcaDao(activity).recupera();
         Modelo modelo = new ModeloDao(activity).recupera();
         Usuario usuario = new UsuarioDao(activity).recupera();
