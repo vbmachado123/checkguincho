@@ -240,7 +240,7 @@ public class FotosActivity extends AppCompatActivity {
     private void abrirDialogEscolha() {
         String[] listItem = getResources().getStringArray(R.array.camera_item);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogStyle);
         builder.setTitle("Escolha uma opção");
         builder.setSingleChoiceItems(listItem, -1, new DialogInterface.OnClickListener() {
             @Override
@@ -255,7 +255,6 @@ public class FotosActivity extends AppCompatActivity {
                         case 2:
                             tirarFoto("a frente", currentFrentePath, iFrente);
                             break;
-
                     }
                     dialog.dismiss();
             }

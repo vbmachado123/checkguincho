@@ -37,6 +37,7 @@
                 android:id="@+id/cbRadio"
                 android:text="@string/texto_radio"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -45,6 +46,7 @@
                 android:id="@+id/cbEstepe"
                 android:text="@string/texto_estepe"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -53,6 +55,7 @@
                 android:id="@+id/cbMacaco"
                 android:text="@string/texto_macaco"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -61,6 +64,7 @@
                 android:id="@+id/cbChaveRodas"
                 android:text="@string/texto_chaveRodas"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -69,6 +73,7 @@
                 android:id="@+id/cbTriangulo"
                 android:text="@string/texto_triangulo"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -77,6 +82,7 @@
                 android:id="@+id/cbExtintor"
                 android:text="@string/texto_extintor"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -85,6 +91,7 @@
                 android:id="@+id/cbCalotas"
                 android:text="@string/texto_calotas"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -93,6 +100,7 @@
                 android:id="@+id/cbTapeteBorracha"
                 android:text="@string/texto_tapeteBorracha"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -101,6 +109,7 @@
                 android:id="@+id/cbTapeteCarpete"
                 android:text="@string/texto_tapeteCarpete"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -109,6 +118,7 @@
                 android:id="@+id/cbRodaLiga"
                 android:text="@string/texto_rodasLiga"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -117,6 +127,7 @@
                 android:id="@+id/cbFaroisAux"
                 android:text="@string/texto_faroisAux"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -125,6 +136,7 @@
                 android:id="@+id/cbBateria"
                 android:text="@string/texto_bateria"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -133,6 +145,7 @@
                 android:id="@+id/cbRetrovisorEletrico"
                 android:text="@string/texto_retrovisorEletrico"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -141,6 +154,7 @@
                 android:id="@+id/cbBagageiro"
                 android:text="@string/texto_bagageiro"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -149,6 +163,7 @@
                 android:id="@+id/cbRack"
                 android:text="@string/texto_rack"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -157,6 +172,7 @@
                 android:id="@+id/cbCarter"
                 android:text="@string/texto_carter"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -165,6 +181,7 @@
                 android:id="@+id/cbDocumentos"
                 android:text="@string/texto_documentos"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -173,6 +190,7 @@
                 android:id="@+id/cbChaves"
                 android:text="@string/texto_chaves"
                 android:textSize="20sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

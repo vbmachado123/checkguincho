@@ -100,7 +100,7 @@ public class AssinaturaRecusaActivity extends AppCompatActivity {
         "considero desnecessária a inspeção dos quadros acima, estou ciente de todas as avarias e materiais existentes ou faltantes em meu veículo, " +
         "já que acompanharei o trajeto do reboque. Portanto ASSINO dispensando as verificações:";
 
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        AlertDialog dialog = new AlertDialog.Builder(this, R.style.DialogStyle)
                 .setTitle("Recusa")
                 .setMessage(mensagem)
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

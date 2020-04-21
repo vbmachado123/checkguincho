@@ -168,6 +168,7 @@
                 android:id="@+id/cbRecusaInspecao"
                 android:text="@string/texto_recusaInspecao"
                 android:textSize="18sp"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

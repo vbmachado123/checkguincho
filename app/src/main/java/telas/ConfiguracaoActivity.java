@@ -9,6 +9,7 @@ import androidx.lifecycle.GenericLifecycleObserver;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -77,7 +78,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private String identificadorUsuario;
 
-    @SuppressLint("WrongViewCast")
+    private Context context = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +88,10 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         toolbar.setTitle("Configurações");
         setSupportActionBar(toolbar);
 
+        usuario = new Usuario();
+        dao = new UsuarioDao(context);
+        validaCampo();
+
         /* CONFIGURAÇÕES INICIAIS */
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         storage = FirebaseStorage.getInstance();
@@ -93,9 +99,6 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
         identificadorUsuario = autenticacao.getCurrentUser().getEmail();
 
-        usuario = new Usuario();
-
-        validaCampo();
         mascaraCampo();
     }
 
@@ -114,7 +117,6 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     }
 
     private void validaCampo() {
-        dao = new UsuarioDao(this);
         nomeEmpresa = (EditText) findViewById(R.id.etNomeEmpresa);
         cnpjEmpresa = (EditText) findViewById(R.id.etCnpjEmpresa);
         nomeMotorista = (EditText) findViewById(R.id.etNomeMotorista);
@@ -138,7 +140,6 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         } else{
             imagemLogo.setImageResource(R.drawable.logo);
         }
-
 
         if(usuario != null){
             nomeEmpresa.setText(usuario.getNomeEmpresa());
@@ -193,7 +194,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
     private void alterarLogo() {
 
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        AlertDialog dialog = new AlertDialog.Builder(this, R.style.DialogStyle)
                 .setTitle("Atenção")
                 .setMessage("Realmente deseja alterar a logo?")
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -220,7 +221,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     }
 
     private void alterarAssinatura() {
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        AlertDialog dialog = new AlertDialog.Builder(this, R.style.DialogStyle)
                 .setTitle("Atenção")
                 .setMessage("Realmente deseja alterar a assinatura?")
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -241,21 +242,21 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     }
 
     private void criarUsuario() {
-        Usuario usuarioInicial = new Usuario();
-        UsuarioDao daoInicial = new UsuarioDao(this);
+        Usuario usuario = new Usuario();
+        UsuarioDao dao = new UsuarioDao(context);
 
-        usuarioInicial.setNomeEmpresa(nomeEmpresa.getText().toString());
-        usuarioInicial.setCnpjEmpresa(cnpjEmpresa.getText().toString());
-        usuarioInicial.setNomeMorotista(nomeMotorista.getText().toString());
-        usuarioInicial.setRgMotorista(rgMotorista.getText().toString());
-        usuarioInicial.setTelefoneMotorista(telefoneMotorista.getText().toString());
+        usuario.setNomeEmpresa(nomeEmpresa.getText().toString());
+        usuario.setCnpjEmpresa(cnpjEmpresa.getText().toString());
+        usuario.setNomeMorotista(nomeMotorista.getText().toString());
+        usuario.setRgMotorista(rgMotorista.getText().toString());
+        usuario.setTelefoneMotorista(telefoneMotorista.getText().toString());
 
-        daoInicial.inserir(usuarioInicial);
+        dao.inserir(usuario);
     }
 
     private void confirmaSaida() {
 
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        AlertDialog dialog = new AlertDialog.Builder(this, R.style.DialogStyle)
                 .setTitle("Atenção")
                 .setMessage("Realmente deseja atualizar as informações?")
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

@@ -227,6 +227,8 @@ public class FormularioActivity extends AppCompatActivity {
         inspecao.setInspecao(intInspecao);
         long idInspecao = inspecaoDao.insere(inspecao);
 
+        Log.i("Inspecao: ", String.valueOf(idInspecao));
+
         /* SALVANDO LOCALIZAÇÃO */
         localizacao = localizacaoDao.recupera();
         localizacao.setIdInspecao((int) idInspecao);

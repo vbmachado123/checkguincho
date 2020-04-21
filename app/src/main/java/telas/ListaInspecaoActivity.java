@@ -168,7 +168,7 @@ public class ListaInspecaoActivity extends AppCompatActivity {
                 ( AdapterView.AdapterContextMenuInfo ) item.getMenuInfo();
 
         final Inspecao inspecaoExcluir = inspecoesFiltradas.get(menuInfo.position);
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        AlertDialog dialog = new AlertDialog.Builder(this, R.style.DialogStyle)
                 .setTitle("Atenção")
                 .setMessage("Realmente deseja excluir a inspeção?")
                 .setNegativeButton("Cancelar", null)
@@ -193,11 +193,13 @@ public class ListaInspecaoActivity extends AppCompatActivity {
         final Inspecao inspecaoVisualizar = inspecoesFiltradas.get(menuInfo.position);
         Pdf pdf = new PdfDao(this).getById(inspecaoVisualizar.getId());
 
-        File file = new File(pdf.getCaminhoDocumento());
-        if(pdf.getCaminhoDocumento() != null && file.length() > 0 && file.exists()) {
-            Intent it = new Intent(ListaInspecaoActivity.this, ExibePDFActivity.class);
-            it.putExtra("documento", pdf.getCaminhoDocumento());
-            startActivity(it);
+        if(pdf != null) {
+            File file = new File(pdf.getCaminhoDocumento());
+            if(file.exists()) {
+                Intent it = new Intent(ListaInspecaoActivity.this, ExibePDFActivity.class);
+                it.putExtra("documento", pdf.getCaminhoDocumento());
+                startActivity(it);
+            } else Toast.makeText(this, "Documento indisponível", Toast.LENGTH_SHORT).show();
         } else Toast.makeText(this, "Documento indisponível", Toast.LENGTH_SHORT).show();
     }
 }

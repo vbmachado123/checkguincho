@@ -295,7 +295,7 @@ public class GeraPDF {
             BitmapDrawable drawable2 = ((BitmapDrawable) dGrade2);
             Bitmap bmpGrade2 = drawable2.getBitmap();
 
-            ByteArrayOutputStream baos2 = new ByteArrayOutputStream(); //Reutilizar
+            ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
             bmpGrade2.compress(Bitmap.CompressFormat.PNG, 50, baos2);
 
             Image imagemGrade2 = Image.getInstance(baos2.toByteArray());
@@ -306,21 +306,21 @@ public class GeraPDF {
             Rectangle tamanhoFotos = new Rectangle(PageSize.A8);
 
             int x = 8, y = 6;
-            int aX = 150;
+            int aX = 150, aY = 600;
 
             Image imagemPainel = Image.getInstance(fotos.getCaminhoFotoPainel());
             imagemPainel.scalePercent (x, y);
-            imagemPainel.setAbsolutePosition(aX,600);
+            imagemPainel.setAbsolutePosition(aX,aY);
             documento.add(imagemPainel);
 
             Image imagemLateral = Image.getInstance(fotos.getCaminhoFotoLado());
             imagemLateral.scalePercent (x, y);
-            imagemLateral.setAbsolutePosition(aX,400);
+            imagemLateral.setAbsolutePosition(aX,aY - 200);
             documento.add(imagemLateral);
 
             Image imagemFrente = Image.getInstance(fotos.getCaminhoFotoFrente());
             imagemFrente.scalePercent (x, y);
-            imagemFrente.setAbsolutePosition(aX,200);
+            imagemFrente.setAbsolutePosition(aX,aY - 400);
             documento.add(imagemFrente);
         }
 
