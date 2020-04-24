@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -141,9 +142,6 @@ public class CadastroActivity extends AppCompatActivity {
                         Preferencias preferencias = new Preferencias(CadastroActivity.this);
                         preferencias.salvarDados(identificador, usuario.getNomeEmpresa());
 
-                        /* ATUALIZAR A FOTO DE PERFIL DO USUÁRIO */
-
-
                     } else {
                         /*Tratando os erros ao logar o usuário*/
                         String erroExcecao = "";
@@ -153,6 +151,8 @@ public class CadastroActivity extends AppCompatActivity {
                             erroExcecao = "Digite uma senha mais forte, contendo mais caracteres e com letras e números";
                         } catch (FirebaseAuthInvalidCredentialsException e) {
                             erroExcecao = "O e-mail digitado é inválido, digite um novo e-mail!";
+                        } catch (FirebaseNetworkException e){
+                            erroExcecao = "Sem acesso a internet";
                         } catch (FirebaseAuthUserCollisionException e) {
                             erroExcecao = "Este e-mail já está sendo usado!";
                         } catch (Exception e) {

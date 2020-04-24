@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                    assinaturaPrestador(AtendimentoActivity.class);
-                   // assinaturaPrestador(FinalizaActivity.class);
+                   // acessaActivity(FotosActivity.class);
             }
         });
 

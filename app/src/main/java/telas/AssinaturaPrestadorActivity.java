@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -63,24 +65,38 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
 
                 File mydir = new File(root, nomePasta);
                 File file = new File(mydir, nome);
-
-                /*if(file.exists()) file.mkdirs();*/
-                file.mkdirs();
-                mydir.mkdir();
+                mydir.mkdirs();
 
                 try{
-                    file.createNewFile();
-                    out = new FileOutputStream(file);
-                    b.compress(Bitmap.CompressFormat.JPEG, 30, out);
-                    out.flush();
-                    out.close();
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            createFile(String.valueOf(mydir));
+                            if(mydir.exists()){
+                                File androidM = new File(mydir, nome);
+                                mydir.getParentFile().mkdirs();
+                                mydir.createNewFile();
+                                out = new FileOutputStream(androidM);
+
+                                FileOutputStream oFile = new FileOutputStream(androidM, false);
+                                b.compress(Bitmap.CompressFormat.JPEG, 30, oFile);
+                            }
+
+                        } else { //Funcionando
+                            mydir.createNewFile();
+                            out = new FileOutputStream(file);
+                            b.compress(Bitmap.CompressFormat.JPEG, 30, out);
+                            out.flush();
+                            out.close();
+                        }
                     Toast.makeText(AssinaturaPrestadorActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
+                   /* Espaço interno insuficiente
+                    * Erro genérico ao gerar pasta
+                    * Salvar no armazenamento externo */
+
                     e.printStackTrace();
-                    //Tratar este erro e resolve-lo
-                    createTemporaryFile(getCurrentFocus());
+                    createFile(String.valueOf(mydir));
                 } catch (Exception e){
                     e.printStackTrace();
                 }
@@ -93,12 +109,27 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                 } else dao.inserir(usuario);
 
                 Intent it = new Intent(AssinaturaPrestadorActivity.this, ConfiguracaoActivity.class);
-                startActivity(it);
+               // startActivity(it);
             }
         });
     }
 
-    public void createTemporaryFile(View view) {
+    public static void createFile(String path) {
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            } else {
+                FileOutputStream writer = new FileOutputStream(path);
+                writer.write(("").getBytes());
+                writer.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createTemporaryFile(Context context) {
 
         String nomePasta = "/CheckGuincho/Imagens";
         String root = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -107,7 +138,7 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
             String fileName = "temporario";
             String coupons = "Get upto 50% off shoes @ xyx shop \n Get upto 80% off on shirts @ yuu shop";
 
-            File file = File.createTempFile(fileName, null, new File(root));
+            File file = File.createTempFile(fileName, null, new File(root, nomePasta + fileName));
 
             FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(coupons.getBytes());
