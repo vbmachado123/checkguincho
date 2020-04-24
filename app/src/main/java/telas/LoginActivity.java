@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.balbino.checkguincho.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -135,6 +136,8 @@ public class LoginActivity extends AppCompatActivity {
                         erroExcecao = "E-mail inválido!";
                     } catch (FirebaseAuthInvalidCredentialsException e) {
                         erroExcecao = "Senha incorreta!";
+                    } catch (FirebaseNetworkException e){
+                        erroExcecao = "Sem acesso a internet";
                     } catch (Exception e) {
                         erroExcecao = "Erro ao efetuar o login!";
                         e.printStackTrace();

@@ -140,6 +140,10 @@ public class CadastroActivity extends AppCompatActivity {
 
                         Preferencias preferencias = new Preferencias(CadastroActivity.this);
                         preferencias.salvarDados(identificador, usuario.getNomeEmpresa());
+
+                        /* ATUALIZAR A FOTO DE PERFIL DO USUÁRIO */
+
+
                     } else {
                         /*Tratando os erros ao logar o usuário*/
                         String erroExcecao = "";
@@ -186,6 +190,12 @@ public class CadastroActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                Uri url = taskSnapshot.getDownloadUrl();
+                if(ConfiguracaoFirebase.atualizarFotoUsuario(url)){
+                    Log.i("Foto", "Sucesso ao atualizar imagem");
+                }
+
                 Toast.makeText(CadastroActivity.this, "Sucesso ao fazer upload da imagem",
                         Toast.LENGTH_SHORT).show();
             }

@@ -132,14 +132,18 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
         user = ConfiguracaoFirebase.getUsuarioAtual();
 
-        Uri url = user.getPhotoUrl();
-        if(url != null){
-            Glide.with(this)
-                    .load(url)
-                    .into(imagemLogo);
-        } else{
-            imagemLogo.setImageResource(R.drawable.logo);
-        }
+            try{
+                Uri url = user.getPhotoUrl();
+                if(url != null){
+                    Glide.with(this)
+                            .load(url)
+                            .into(imagemLogo);
+                } else{
+                    imagemLogo.setImageResource(R.drawable.logo);
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
 
         if(usuario != null){
             nomeEmpresa.setText(usuario.getNomeEmpresa());
@@ -226,10 +230,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 .setMessage("Realmente deseja alterar a assinatura?")
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-
-                    }
+                    public void onClick(DialogInterface dialog, int which) { }
                 })
                 .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     @Override
@@ -273,6 +274,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                         Usuario usuario1 = dao.recupera();
 
                         if(usuario1 != null){
+                            identificadorUsuario = String.valueOf(ConfiguracaoFirebase.getUsuarioAtual().getEmail());
                             usuario1.setEmail(identificadorUsuario);
                             usuario1.setNomeEmpresa(nomeEmpresa.getText().toString());
                             usuario1.setCnpjEmpresa(cnpjEmpresa.getText().toString());

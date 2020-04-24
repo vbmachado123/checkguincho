@@ -84,14 +84,19 @@ public class HomeActivity extends AppCompatActivity {
 
         //Recuperar dados do usuario
         FirebaseUser user = ConfiguracaoFirebase.getUsuarioAtual();
-        Uri url = user.getPhotoUrl();
-        if(url != null){
-            Glide.with(this)
-                    .load(url)
-                    .into(imagemLogo);
-        } else{
-            imagemLogo.setImageResource(R.drawable.logo);
+        try{
+            Uri url = user.getPhotoUrl();
+            if(url != null){
+                Glide.with(this)
+                        .load(url)
+                        .into(imagemLogo);
+            } else{
+                imagemLogo.setImageResource(R.drawable.logo);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
+
 
         atendimento.setOnClickListener(new View.OnClickListener() {
             @Override

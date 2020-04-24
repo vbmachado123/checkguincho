@@ -64,11 +64,12 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                 File mydir = new File(root, nomePasta);
                 File file = new File(mydir, nome);
 
-                if(mydir.exists()) mydir.mkdirs();
+                /*if(file.exists()) file.mkdirs();*/
+                file.mkdirs();
+                mydir.mkdir();
 
                 try{
-                    mydir.mkdirs();
-                    mydir.createNewFile();
+                    file.createNewFile();
                     out = new FileOutputStream(file);
                     b.compress(Bitmap.CompressFormat.JPEG, 30, out);
                     out.flush();
@@ -78,6 +79,8 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    //Tratar este erro e resolve-lo
+                    createTemporaryFile(getCurrentFocus());
                 } catch (Exception e){
                     e.printStackTrace();
                 }
@@ -93,6 +96,26 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+    }
+
+    public void createTemporaryFile(View view) {
+
+        String nomePasta = "/CheckGuincho/Imagens";
+        String root = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+        try {
+            String fileName = "temporario";
+            String coupons = "Get upto 50% off shoes @ xyx shop \n Get upto 80% off on shirts @ yuu shop";
+
+            File file = File.createTempFile(fileName, null, new File(root));
+
+            FileOutputStream outputStream = new FileOutputStream(file);
+            outputStream.write(coupons.getBytes());
+            outputStream.flush();
+            outputStream.close();
+
+        } catch (IOException e) {
+        }
     }
 
     @Override

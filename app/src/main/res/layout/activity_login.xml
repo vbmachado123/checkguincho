@@ -29,12 +29,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/etEmail"
                 android:hint="@string/texto_digiteEmail"
+                android:textColorHint="@color/colorTextHint"
                 android:inputType="textEmailAddress"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/etSenha"
+                android:textColorHint="@color/colorTextHint"
                 android:hint="@string/texto_digiteSenha"
                 android:inputType="textPassword"/>
 

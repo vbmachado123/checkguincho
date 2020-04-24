@@ -7,16 +7,18 @@
 
     <EditText
         android:id="@+id/etNomeResponsavel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:hint="Nome"
         android:inputType="textPersonName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textColorHint="@color/colorTextHint" />
 
     <EditText
         android:id="@+id/etRgResponsavel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:hint="Rg"
         android:inputType="number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textColorHint="@color/colorTextHint" />
 
 </LinearLayout>
