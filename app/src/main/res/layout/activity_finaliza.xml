@@ -47,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="start|top"
+                    android:theme="@style/MyEditTextTheme"
                     android:inputType="number" />
             </TableRow>
 
@@ -68,6 +69,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="start|top"
+                    android:theme="@style/MyEditTextTheme"
                     android:inputType="textPersonName" />
             </TableRow>
 

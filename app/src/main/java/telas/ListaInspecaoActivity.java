@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -91,12 +92,14 @@ public class ListaInspecaoActivity extends AppCompatActivity {
         listView.invalidateViews();
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_lista, menu);
 
         SearchView sv = (SearchView) menu.findItem(R.id.item_pesquisa).getActionView();
+        sv.setBackgroundColor(android.R.color.white);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

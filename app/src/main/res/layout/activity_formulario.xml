@@ -47,6 +47,7 @@
                 <EditText android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
+                    android:theme="@style/MyEditTextTheme"
                     android:id="@+id/etNomeProprietario"/>
             </TableRow>
 
@@ -64,6 +65,7 @@
                 <EditText android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:theme="@style/MyEditTextTheme"
                     android:id="@+id/etTelefone"/>
             </TableRow>
 
@@ -92,6 +94,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:imeOptions="actionNext"
+                    android:theme="@style/MyEditTextTheme"
                     android:id="@+id/etMarca"/>
             </TableRow>
 
@@ -110,6 +113,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:imeOptions="actionNext"
+                    android:theme="@style/MyEditTextTheme"
                     android:id="@+id/etModelo"/>
             </TableRow>
 
@@ -127,6 +131,7 @@
                 <EditText android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:theme="@style/MyEditTextTheme"
                     android:id="@+id/etAno"/>
             </TableRow>
 
@@ -144,6 +149,7 @@
                 <EditText android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
+                    android:theme="@style/MyEditTextTheme"
                     android:id="@+id/etCor"/>
             </TableRow>
 
@@ -161,6 +167,7 @@
                 <EditText android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
+                    android:theme="@style/MyEditTextTheme"
                     android:id="@+id/etPlaca"/>
             </TableRow>
 
@@ -169,6 +176,7 @@
                 android:text="@string/texto_recusaInspecao"
                 android:textSize="18sp"
                 android:textColor="@color/colorText"
+                android:theme="@style/MyCheckBoxStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

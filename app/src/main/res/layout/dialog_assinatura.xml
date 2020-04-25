@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:hint="Nome"
         android:inputType="textPersonName"
+        android:theme="@style/MyEditTextTheme"
         android:textColorHint="@color/colorTextHint" />
 
     <EditText
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         android:hint="Rg"
         android:inputType="number"
+        android:theme="@style/MyEditTextTheme"
         android:textColorHint="@color/colorTextHint" />
 
 </LinearLayout>

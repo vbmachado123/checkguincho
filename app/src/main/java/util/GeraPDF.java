@@ -70,8 +70,6 @@ public class GeraPDF {
         Modelo modelo = new ModeloDao(activity).recupera();
         Usuario usuario = new UsuarioDao(activity).recupera();
 
-        Localizacao localizacaoOrigem = new LocalizacaoDao(activity).getById(localizacao.getId() - 1);
-
         SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat horaFormatada = new SimpleDateFormat("HH:mm");
 
@@ -110,7 +108,19 @@ public class GeraPDF {
         documento.add(imagemLogo);
 
         Paragraph branco = new Paragraph(" ");
-        documento.add(branco);
+        //documento.add(branco); //Aqui
+        if(inspecao.getInspecao() != 0){
+            Paragraph localizacaoInicial = new Paragraph();
+            localizacaoInicial.add(new Phrase("Início: ", fontBold));
+            localizacaoInicial.add(new Phrase(localizacao.getEndereco() + " - " + localizacao.getData(), fontNormal));
+            documento.add(localizacaoInicial);
+        } else {
+            Paragraph localizacaoInicial = new Paragraph();
+            Localizacao localizacao1 = new LocalizacaoDao(activity).getById(localizacao.getId() - 2);
+            localizacaoInicial.add(new Phrase("Início: ", fontBold));
+            localizacaoInicial.add(new Phrase(localizacao1.getEndereco() + " - " + localizacao1.getData(), fontNormal));
+            documento.add(localizacaoInicial);
+        }
 
         /* INFORMATIVOS */
         Date date = new Date();
@@ -180,6 +190,8 @@ public class GeraPDF {
             documento.add(linhaObservacao);
 
         } else {
+            Localizacao localizacaoOrigem = new LocalizacaoDao(activity).getById(localizacao.getId() - 1);
+
             /* INSPEÇÃO COMPLETA
             INFORMAÇÕES LOCALIZAÇÃO */
             linha4.add(new Phrase("Origem: ", fontBold));
@@ -325,7 +337,6 @@ public class GeraPDF {
         }
 
         documento.close();
-
         return documento;
     }
 }

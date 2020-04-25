@@ -12,11 +12,12 @@
 
     <ListView
         android:id="@+id/lvInspecoes"
-        android:padding="8dp"
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:divider="@color/colorControlNormal"
+        android:dividerHeight="@dimen/cardview_default_radius"
+        android:padding="8dp"></ListView>
 
     <LinearLayout
         android:layout_width="wrap_content"

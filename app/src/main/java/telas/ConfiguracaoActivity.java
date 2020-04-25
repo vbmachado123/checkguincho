@@ -141,6 +141,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 } else{
                     imagemLogo.setImageResource(R.drawable.logo);
                 }
+
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -274,8 +275,10 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                         Usuario usuario1 = dao.recupera();
 
                         if(usuario1 != null){
-                            identificadorUsuario = String.valueOf(ConfiguracaoFirebase.getUsuarioAtual().getEmail());
-                            usuario1.setEmail(identificadorUsuario);
+                            if(usuario1.getEmail().equals("")){
+                                identificadorUsuario = String.valueOf(ConfiguracaoFirebase.getUsuarioAtual().getEmail());
+                                usuario1.setEmail(identificadorUsuario);
+                            }
                             usuario1.setNomeEmpresa(nomeEmpresa.getText().toString());
                             usuario1.setCnpjEmpresa(cnpjEmpresa.getText().toString());
                             usuario1.setNomeMorotista(nomeMotorista.getText().toString());

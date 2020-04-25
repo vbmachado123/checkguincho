@@ -68,33 +68,18 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                 mydir.mkdirs();
 
                 try{
-                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            createFile(String.valueOf(mydir));
-                            if(mydir.exists()){
-                                File androidM = new File(mydir, nome);
-                                mydir.getParentFile().mkdirs();
-                                mydir.createNewFile();
-                                out = new FileOutputStream(androidM);
-
-                                FileOutputStream oFile = new FileOutputStream(androidM, false);
-                                b.compress(Bitmap.CompressFormat.JPEG, 30, oFile);
-                            }
-
-                        } else { //Funcionando
-                            mydir.createNewFile();
-                            out = new FileOutputStream(file);
-                            b.compress(Bitmap.CompressFormat.JPEG, 30, out);
-                            out.flush();
-                            out.close();
-                        }
+                    file.createNewFile();
+                    out = new FileOutputStream(file);
+                    b.compress(Bitmap.CompressFormat.JPEG, 30, out);
+                    out.flush();
+                    out.close();
                     Toast.makeText(AssinaturaPrestadorActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
-                } catch (IOException e) {
+                } catch (IOException e) { //No such file or directory
                    /* Espaço interno insuficiente
                     * Erro genérico ao gerar pasta
                     * Salvar no armazenamento externo */
-
                     e.printStackTrace();
                     createFile(String.valueOf(mydir));
                 } catch (Exception e){
@@ -109,7 +94,7 @@ public class AssinaturaPrestadorActivity extends AppCompatActivity {
                 } else dao.inserir(usuario);
 
                 Intent it = new Intent(AssinaturaPrestadorActivity.this, ConfiguracaoActivity.class);
-               // startActivity(it);
+                startActivity(it);
             }
         });
     }

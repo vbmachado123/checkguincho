@@ -30,6 +30,7 @@
                 android:id="@+id/etEmail"
                 android:hint="@string/texto_digiteEmail"
                 android:textColorHint="@color/colorTextHint"
+                android:theme="@style/MyEditTextTheme"
                 android:inputType="textEmailAddress"/>
 
             <EditText
@@ -38,6 +39,7 @@
                 android:id="@+id/etSenha"
                 android:textColorHint="@color/colorTextHint"
                 android:hint="@string/texto_digiteSenha"
+                android:theme="@style/MyEditTextTheme"
                 android:inputType="textPassword"/>
 
             <Button

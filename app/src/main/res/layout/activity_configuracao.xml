@@ -43,10 +43,12 @@
                     android:textSize="20sp"
                     android:text="@string/textoEmpresa"/>
 
-                <EditText android:layout_width="match_parent"
+                <EditText
+                    android:id="@+id/etNomeEmpresa"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:id="@+id/etNomeEmpresa"/>
+                    android:theme="@style/MyEditTextTheme"
+                    android:inputType="textPersonName" />
             </TableRow>
 
             <TableRow
@@ -63,6 +65,7 @@
                 <EditText android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:theme="@style/MyEditTextTheme"
                     android:id="@+id/etCnpjEmpresa"/>
             </TableRow>
 
@@ -90,6 +93,7 @@
                 <EditText android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
+                    android:theme="@style/MyEditTextTheme"
                     android:id="@+id/etNomeMotorista"/>
             </TableRow>
 
@@ -108,6 +112,7 @@
                 <EditText android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:theme="@style/MyEditTextTheme"
                     android:id="@+id/etRgMotorista"/>
             </TableRow>
 
@@ -125,6 +130,7 @@
                 <EditText android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:theme="@style/MyEditTextTheme"
                     android:id="@+id/etTelefoneMorista"/>
             </TableRow>
 
