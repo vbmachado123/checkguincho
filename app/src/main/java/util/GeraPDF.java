@@ -189,6 +189,25 @@ public class GeraPDF {
             linhaObservacao.add(new Phrase(observacao));
             documento.add(linhaObservacao);
 
+            pula = 0;
+            while(pula <= 6){
+                documento.add(branco);
+                pula++;
+            }
+
+            Paragraph assinaPrestador = new Paragraph();
+            assinaPrestador.setAlignment(Element.ALIGN_CENTER);
+            assinaPrestador.add(new Phrase("Nome: " , fontBold));
+            assinaPrestador.add(new Phrase(usuario.getNomeMorotista() + "\n", fontNormal));
+            assinaPrestador.add(new Phrase("Rg: " , fontBold));
+            assinaPrestador.add(new Phrase(usuario.getRgMotorista() + "\n", fontNormal));
+            documento.add(assinaPrestador);
+
+            Image imagemAssinaturaPrestador = Image.getInstance(usuario.getCaminhoAssinatura());
+            imagemAssinaturaPrestador.scalePercent(12, 02);
+            imagemAssinaturaPrestador.setAbsolutePosition(490, 80); //400y MEIO DA FOLHA
+            documento.add(imagemAssinaturaPrestador);
+
         } else {
             Localizacao localizacaoOrigem = new LocalizacaoDao(activity).getById(localizacao.getId() - 1);
 

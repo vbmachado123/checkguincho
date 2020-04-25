@@ -21,6 +21,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 
+import static androidx.core.content.FileProvider.getUriForFile;
+
 public class ExibePDFActivity extends AppCompatActivity {
 
     private PDFView view;
@@ -61,28 +63,34 @@ public class ExibePDFActivity extends AppCompatActivity {
     fabEnviar.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) enviarArquivoM();
-             else enviarArquivo();
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                enviarArquivoM();
+            else
+                enviarArquivo();
+
         }
     });
     }
 
     private void enviarArquivoM() {
         Intent enviar = new Intent();
-            uri = FileProvider.getUriForFile(
+            uri = getUriForFile(
                     this, "com.balbino.checkguincho.fileprovider", file);
+            enviar.setAction(Intent.ACTION_SEND);
             enviar.putExtra(Intent.EXTRA_STREAM, uri);
             enviar.setType("application/pdf");
             startActivity(Intent.createChooser(enviar, "Enviar documento via..."));
     }
 
     private void enviarArquivo() {
-        Intent enviar = new Intent();
+            Intent enviar = new Intent();
             uri = Uri.fromFile(file);
-            enviar.setAction(Intent.ACTION_SEND);
-            enviar.putExtra(Intent.EXTRA_STREAM, uri);
-            enviar.setType("application/pdf");
-            startActivity(Intent.createChooser(enviar, "Enviar documento via..."));
+            if(uri != null){
+                enviar.setAction(Intent.ACTION_SEND);
+                enviar.putExtra(Intent.EXTRA_STREAM, uri);
+                enviar.setType("application/pdf");
+                startActivity(Intent.createChooser(enviar, "Enviar documento via..."));
+            } else Toast.makeText(this, "Não foi possível compartilhar o arquivo", Toast.LENGTH_SHORT).show();
     }
 
     @Override

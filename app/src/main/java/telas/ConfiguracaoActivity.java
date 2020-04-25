@@ -301,7 +301,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     private void subirImagem() {
 
         if(filePath != null){
-            final ProgressDialog progressDialog = new ProgressDialog(this);
+            final ProgressDialog progressDialog = new ProgressDialog(this, R.style.DialogStyle);
             progressDialog.setTitle("Salvando imagem...");
             progressDialog.show();
 
