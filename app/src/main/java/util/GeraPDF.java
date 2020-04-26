@@ -86,7 +86,7 @@ public class GeraPDF {
 
         Paragraph cabecalho = new Paragraph();
         cabecalho.add(new Phrase(usuario.getNomeEmpresa() + "\n" +
-                usuario.getNomeMorotista() + "\n" + "\n" +
+                usuario.getNomeMorotista() + "\n" +
                 usuario.getTelefoneMotorista()));
         cabecalho.setAlignment(Element.ALIGN_RIGHT);
         documento.add(cabecalho);

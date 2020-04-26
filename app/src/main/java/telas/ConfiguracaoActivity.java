@@ -97,7 +97,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        identificadorUsuario = autenticacao.getCurrentUser().getEmail();
+        //identificadorUsuario = autenticacao.getCurrentUser().getEmail();
 
         mascaraCampo();
     }
@@ -274,9 +274,13 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                         UsuarioDao dao = new UsuarioDao(ConfiguracaoActivity.this);
                         Usuario usuario1 = dao.recupera();
 
+                        /* RECUPERANDO INSTÂNCIA DA AUTENTICAÇÃO */
+                        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
                         if(usuario1 != null){
                             if(usuario1.getEmail().equals("")){
-                                identificadorUsuario = String.valueOf(ConfiguracaoFirebase.getUsuarioAtual().getEmail());
+                                identificadorUsuario = autenticacao.getCurrentUser().getEmail();
+                                identificadorUsuario = String.valueOf(autenticacao.getCurrentUser().getEmail());
                                 usuario1.setEmail(identificadorUsuario);
                             }
                             usuario1.setNomeEmpresa(nomeEmpresa.getText().toString());
@@ -287,7 +291,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                             dao.atualizar(usuario1);
                         } else criarUsuario();
 
-                        String identificador = Base64Custom.codificarBase64(usuario.getEmail());
+                        String identificador = Base64Custom.codificarBase64(usuario.getNomeEmpresa());
 
                         reference.child("usuarios").child(identificador).setValue(usuario);
 

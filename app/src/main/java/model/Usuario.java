@@ -13,21 +13,21 @@ public class Usuario implements Serializable {
     private int id;
 
     /* LOGIN */
-    private String email = null;
-    private String senha = null;
+    private String email = "";
+    private String senha = "";
 
     /* EMPRESA */
-    private String nomeEmpresa = null;
-    private String cnpjEmpresa = null;
+    private String nomeEmpresa = "";
+    private String cnpjEmpresa = "";
 
     /* MOTORISTA */
-    private String nomeMorotista = null;
-    private String rgMotorista = null;
-    private String telefoneMotorista = null;
+    private String nomeMorotista = "";
+    private String rgMotorista = "";
+    private String telefoneMotorista = "";
 
     /* IMAGENS */
-    private String caminhoImagemLogo = null;
-    private String caminhoAssinatura = null;
+    private String caminhoImagemLogo = "";
+    private String caminhoAssinatura = "";
 
     public void Usuario(){}
 
