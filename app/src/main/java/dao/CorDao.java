@@ -22,8 +22,7 @@ public class CorDao {
 
     public Cor recupera(){
         Cursor cursor = banco.rawQuery("SELECT * FROM cor", null);
-        cursor.moveToFirst();
-
+       // cursor.moveToFirst();
         while (cursor.moveToNext()){
             cor = new Cor();
             cor.setId(cursor.getInt(0));

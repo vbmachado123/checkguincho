@@ -22,7 +22,7 @@ public class FigurasDao {
 
     public FigurasInspecao recupera(){
         Cursor cursor = banco.rawQuery("SELECT * FROM figurasInspecao", null);
-        cursor.moveToFirst();
+        //cursor.moveToFirst();
 
         while (cursor.moveToNext()){
             figurasInspecao = new FigurasInspecao();

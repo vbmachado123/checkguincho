@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         Usuario usuario = new UsuarioDao(this).recupera();
-        if(usuario == null) {
+        if( usuario.getCnpjEmpresa().equals("") && usuario.getRgMotorista().equals("") ) {
             toolbar.setTitle("CheckGuincho");
             setSupportActionBar(toolbar);
             Toast.makeText(this, "Complete o cadastro para prosseguir!", Toast.LENGTH_SHORT).show();

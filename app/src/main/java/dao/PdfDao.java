@@ -32,7 +32,7 @@ public class PdfDao {
 
     public Pdf recupera(){
         Cursor cursor = banco.rawQuery("SELECT * FROM pdf", null);
-        cursor.moveToFirst();
+       // cursor.moveToFirst();
 
         while (cursor.moveToNext()){
          pdf = new Pdf();

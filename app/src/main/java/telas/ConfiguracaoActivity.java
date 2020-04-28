@@ -63,7 +63,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     private TextView carregarLogo, assinatura;
     private FloatingActionButton fabSalvar;
 
-    private Usuario usuario;
+    private Usuario usuario = new Usuario();
     private UsuarioDao dao;
     private String caminhoAssinatura;
 
@@ -88,8 +88,10 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         toolbar.setTitle("Configurações");
         setSupportActionBar(toolbar);
 
-        usuario = new Usuario();
-        dao = new UsuarioDao(context);
+        dao = new UsuarioDao(ConfiguracaoActivity.this);
+
+        //usuario = dao.recupera();
+
         validaCampo();
 
         /* CONFIGURAÇÕES INICIAIS */
@@ -127,7 +129,6 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         assinatura = (TextView) findViewById(R.id.tvAssinatura);
         imagemAssinatura = (ImageView) findViewById(R.id.ivAssinatura);
         fabSalvar = (FloatingActionButton) findViewById(R.id.fabSalvar);
-
         usuario = dao.recupera();
 
         user = ConfiguracaoFirebase.getUsuarioAtual();
@@ -217,7 +218,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                         Intent it = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         if( it.resolveActivity(getPackageManager()) != null ){
                             it.setType("image/*");
-                     /*       it.setAction(Intent.ACTION_GET_CONTENT);*/
+                          /*it.setAction(Intent.ACTION_GET_CONTENT);*/
                             startActivityForResult(it,foto);
                         }
                     }

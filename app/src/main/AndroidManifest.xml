@@ -25,19 +25,21 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="telas.ExibePDFActivity"></activity>
+        <activity android:name="telas.CadastroActivity"></activity>
+        <activity android:name="telas.ExibePDFActivity" />
         <activity android:name="telas.LoginActivity" />
         <activity android:name="telas.ListaInspecaoActivity" />
         <activity android:name="telas.DestinoActivity" />
         <activity android:name="telas.FinalizaActivity" />
+        <activity android:name="telas.FiguraActivity" />
+        <activity android:name="telas.CheckListActivity" />
+        <activity android:name="telas.FormularioActivity" />
+        <!-- Telas com DESENHOS e FOTOS não podem ser recriadas -->
         <activity
             android:name="telas.FotosActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name="telas.FiguraActivity" />
-        <activity android:name="telas.CheckListActivity" />
-        <activity android:name="telas.FormularioActivity" />
         <activity
             android:name="telas.AssinaturaEntregaActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -58,7 +60,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name="telas.CadastroActivity" />
+        <activity android:name="telas.TesteActivity" />
         <activity android:name="telas.HomeActivity" />
         <activity android:name="telas.AtendimentoActivity" />
         <activity android:name="telas.ConfiguracaoActivity" />

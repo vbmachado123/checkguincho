@@ -22,7 +22,7 @@ public class MarcaDao {
 
     public Marca recupera(){
         Cursor cursor = banco.rawQuery("SELECT * FROM marca", null);
-        cursor.moveToFirst();
+        //cursor.moveToFirst();
 
         while (cursor.moveToNext()){
             marca = new Marca();

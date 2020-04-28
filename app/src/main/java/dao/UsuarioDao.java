@@ -24,12 +24,9 @@ public class UsuarioDao {
     public Usuario recupera(){
 
         Cursor cursor = banco.rawQuery("SELECT * FROM usuario", null);
-
-        cursor.moveToFirst();
-
+       //cursor.moveToFirst();
         while (cursor.moveToNext()){
             usuario = new Usuario();
-
             usuario.setId(cursor.getInt(0));
             usuario.setEmail(cursor.getString(1));
             usuario.setNomeEmpresa(cursor.getString(3));
@@ -40,6 +37,25 @@ public class UsuarioDao {
             usuario.setCaminhoImagemLogo(cursor.getString(8));
             usuario.setCaminhoAssinatura(cursor.getString(9));
         }
+        return usuario;
+    }
+
+    public Usuario getById(int id){
+        Cursor cursor = banco.rawQuery("SELECT * FROM usuario WHERE id =" + id, null);
+
+        if (cursor.moveToFirst()){
+            usuario = new Usuario();
+            usuario.setId(cursor.getInt(0));
+            usuario.setEmail(cursor.getString(1));
+            usuario.setNomeEmpresa(cursor.getString(3));
+            usuario.setCnpjEmpresa(cursor.getString(4));
+            usuario.setNomeMorotista(cursor.getString(5));
+            usuario.setRgMotorista(cursor.getString(6));
+            usuario.setTelefoneMotorista(cursor.getString(7));
+            usuario.setCaminhoImagemLogo(cursor.getString(8));
+            usuario.setCaminhoAssinatura(cursor.getString(9));
+        }
+
         return usuario;
     }
 

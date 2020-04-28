@@ -22,7 +22,7 @@ public class TipoRegistroDao {
 
     public TipoRegistro recupera(){
         Cursor cursor = banco.rawQuery("SELECT * FROM tipoRegistro", null);
-        cursor.moveToFirst();
+        //cursor.moveToFirst();
         while (cursor.moveToNext()){
             tipoRegistro = new TipoRegistro();
             tipoRegistro.setId(cursor.getInt(0));

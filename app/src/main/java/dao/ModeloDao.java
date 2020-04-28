@@ -22,7 +22,7 @@ public class ModeloDao {
 
     public Modelo recupera(){
         Cursor cursor = banco.rawQuery("SELECT * FROM modelo", null);
-        cursor.moveToFirst();
+        //cursor.moveToFirst();
 
         while (cursor.moveToNext()){
             modelo = new Modelo();

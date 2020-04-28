@@ -23,7 +23,7 @@ public class Usuario implements Serializable {
     /* MOTORISTA */
     private String nomeMorotista = "";
     private String rgMotorista = "";
-    private String telefoneMotorista = "";
+    private String telefoneMotorista;
 
     /* IMAGENS */
     private String caminhoImagemLogo = "";

@@ -22,7 +22,7 @@ public class FotosDao {
 
     public FotosInspecao recupera(){
         Cursor cursor = banco.rawQuery("SELECT * FROM fotosInspecao", null);
-        cursor.moveToFirst();
+        //cursor.moveToFirst();
 
         while (cursor.moveToNext()){
             fotosInspecao = new FotosInspecao();

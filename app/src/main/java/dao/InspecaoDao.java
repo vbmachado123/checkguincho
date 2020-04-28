@@ -25,7 +25,7 @@ public class InspecaoDao {
 
     public Inspecao recupera(){
         Cursor cursor = banco.rawQuery("SELECT * FROM inspecao", null);
-        cursor.moveToFirst();
+        //cursor.moveToFirst();
 
         while (cursor.moveToNext()){
          inspecao = new Inspecao();

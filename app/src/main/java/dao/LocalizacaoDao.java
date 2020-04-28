@@ -23,7 +23,7 @@ public class LocalizacaoDao {
 
     public Localizacao recupera(){
         Cursor cursor = banco.rawQuery("SELECT * FROM localizacao",null);
-        cursor.moveToFirst();
+        //cursor.moveToFirst();
 
         while (cursor.moveToNext()){
             localizacao = new Localizacao();

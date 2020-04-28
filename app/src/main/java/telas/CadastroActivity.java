@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -49,20 +50,27 @@ public class CadastroActivity extends AppCompatActivity {
     private Button botaoCadastrar;
     private Uri filePath;
     private Usuario usuario;
+    private UsuarioDao dao;
+    private long id;
 
     private static final int foto = 1000;
     private Bitmap bitmap;
 
+    /* FIREBASE */
     private FirebaseAuth autenticacao;
     private StorageReference reference, imgRef;
+    private FirebaseUser usuarioFirebase;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        reference = ConfiguracaoFirebase.getFirebaseStorage();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         validaInformacoes();
         mascaraCampo();
@@ -104,12 +112,14 @@ public class CadastroActivity extends AppCompatActivity {
                 boolean campo = validaCampoVazio();
                 if( campo ) {
                     usuario = new Usuario();
+                    dao = new UsuarioDao(CadastroActivity.this);
+
                     usuario.setEmail(email.getText().toString());
                     usuario.setSenha(senha.getText().toString());
-                    usuario.setTelefoneMotorista(telefone.getText().toString());
                     usuario.setNomeEmpresa(nomeEmpresa.getText().toString());
-                    UsuarioDao dao = new UsuarioDao(CadastroActivity.this);
-                    long id = dao.inserir(usuario);
+                    usuario.setTelefoneMotorista(telefone.getText().toString());
+
+                    id = dao.inserir(usuario);
                     Log.i("ID", String.valueOf(id));
                     cadastrarUsuario();
                 }
@@ -136,7 +146,7 @@ public class CadastroActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if(task.isSuccessful()){
-                        FirebaseUser usuarioFirebase = task.getResult().getUser();
+                        usuarioFirebase = task.getResult().getUser();
                         String identificador = usuario.salvar();
 
                         Preferencias preferencias = new Preferencias(CadastroActivity.this);
@@ -163,14 +173,18 @@ public class CadastroActivity extends AppCompatActivity {
                     }
                 }
             });
+
          if( !(filePath == null) ) {
              usuario.setCaminhoImagemLogo(filePath.toString());
              subirImagem();
          }
-        acessaActivity(HomeActivity.class);
+       acessaActivity(HomeActivity.class);
     }
 
     private void subirImagem() {
+
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        reference = ConfiguracaoFirebase.getFirebaseStorage();
 
         imgRef = reference
                 .child(usuario.getNomeEmpresa())

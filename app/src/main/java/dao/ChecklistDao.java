@@ -21,7 +21,7 @@ public class ChecklistDao {
 
     public Checklist recupera(){
         Cursor cursor = banco.rawQuery("SELECT * FROM checklist", null);
-        cursor.moveToFirst();
+       // cursor.moveToFirst();
         while (cursor.moveToNext()){
             checklist = new Checklist();
             checklist.setId(cursor.getInt(0));
