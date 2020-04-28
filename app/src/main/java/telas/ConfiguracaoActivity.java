@@ -67,7 +67,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     private UsuarioDao dao;
     private String caminhoAssinatura;
 
-    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference reference;
     private FirebaseAuth autenticacao;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -90,14 +90,13 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
         dao = new UsuarioDao(ConfiguracaoActivity.this);
 
-        //usuario = dao.recupera();
-
         validaCampo();
 
         /* CONFIGURAÇÕES INICIAIS */
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        reference = ConfiguracaoFirebase.getFirebaseDatabase();
 
         //identificadorUsuario = autenticacao.getCurrentUser().getEmail();
 
